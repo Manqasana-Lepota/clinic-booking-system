@@ -9,3 +9,5 @@ class Config:
 
     # Flask Settings
     SECRET_KEY = 'clinic_booking_secret_12345'
+
+   
