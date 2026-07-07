@@ -3,7 +3,7 @@ class Config:
     #  MySQL Settings
     MYSQL_HOST = 'localhost'
     MYSQL_USER = 'root'
-    MYSQL_PASSWORD = 'password'
+    MYSQL_PASSWORD = 'Password@2026'
     MYSQL_DB = 'clinic-booking-system'
     MYSQL_CURSORCLASS = 'DictCursor'
 

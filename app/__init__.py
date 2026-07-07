@@ -1,6 +1,6 @@
 from flask import Flask
 from flask_mysqldb import MySQL
-from flask import Config
+from config import Config
 
 mysql = MySQL()
 
@@ -20,8 +20,8 @@ def create_app():
     from app.routes.auth_routes import auth_bp
     app.register_blueprint(auth_bp)
 
-    #from app.routes.admin_routes import admin_bp
-    #app.register_blueprint(admin_bp)
+    from app.routes.admin_routes import admin_bp
+    app.register_blueprint(admin_bp)
 
     #from app.routes.doctor_routes import doctor_bp
     #app.register_blueprint(doctor_bp)

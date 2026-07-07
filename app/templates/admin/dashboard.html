@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+
+    <!-- Bootstrap -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+
+<body>
+
+    <div class="wrapper">
+        
+        <!-- Sidebar -->
+         <aside class="sidebar">
+
+    <div class="logo">
+
+        <i class="fa-solid fa-hospital"></i>
+
+        <div>
+            <h2>Clinic</h2>
+            <span>Booking System</span>
+        </div>
+
+    </div>
+
+    <ul class="menu">
+
+        <li class="active">
+            <a href="{{ url_for('admin.dashboard') }}">
+                <i class="fa-solid fa-gauge-high"></i>
+                <span>Dashboard</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-user-doctor"></i>
+                <span>Doctors</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-users"></i>
+                <span>Patients</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-calendar-check"></i>
+                <span>Appointments</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-chart-column"></i>
+                <span>Reports</span>
+            </a>
+        </li>
+
+        <li>
+            <a href="#">
+                <i class="fa-solid fa-gear"></i>
+                <span>Settings</span>
+            </a>
+        </li>
+
+        <li class="logout">
+            <a href="{{ url_for('auth.logout') }}">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                <span>Logout</span>
+            </a>
+        </li>
+
+    </ul>
+
+</aside>
+         
+              
+               
+         
+        
+        <!-- Main Content -->
+         <main class="content">
+            
+            <!-- Top Navbar -->
+             <div class="topbar">
+
+    <div class="left-section">
+
+        <button class="menu-toggle" id="menu-toggle">
+            <i class="fa-solid fa-bars"></i>
+        </button>
+
+        <div>
+
+            <h2>Dashboard</h2>
+            <small>Welcome back, {{ session['user_name'] }}</small>
+
+        </div>
+
+    </div>
+
+    <div class="right-section">
+
+        <div class="search-box">
+
+            <i class="fa-solid fa-search"></i>
+
+            <input
+                type="text"
+                placeholder="Search...">
+
+        </div>
+
+        <button class="icon-btn">
+
+            <i class="fa-solid fa-moon"></i>
+
+        </button>
+
+        <button class="icon-btn notification">
+
+            <i class="fa-solid fa-bell"></i>
+
+            <span>3</span>
+
+        </button>
+
+        <div class="profile" id="profileMenu">
+
+    <img src="{{ url_for('static', filename='images/admin.png') }}">
+
+    <div>
+
+        <strong>{{ session['user_name'] }}</strong>
+
+        <small>Administrator</small>
+
+    </div>
+
+    <i class="fa-solid fa-chevron-down"></i>
+
+    <div class="profile-dropdown">
+
+        <a href="#">
+            <i class="fa-solid fa-user"></i>
+            My Profile
+        </a>
+
+        <a href="#">
+            <i class="fa-solid fa-gear"></i>
+            Settings
+        </a>
+
+        <a href="{{ url_for('auth.logout') }}">
+            <i class="fa-solid fa-right-from-bracket"></i>
+            Logout
+        </a>
+
+    </div>
+
+</div>
+
+    </div>
+
+</div>
+          
+
+            <!-- Cards -->
+
+            <div class="cards">
+
+    <div class="card doctor-card">
+
+        <div class="card-icon">
+            <i class="fa-solid fa-user-doctor"></i>
+        </div>
+
+        <div>
+
+            <h2>{{ doctors }}</h2>
+            <p>Total Doctors</p>
+
+        </div>
+
+    </div>
+
+    <div class="card patient-card">
+
+        <div class="card-icon">
+            <i class="fa-solid fa-users"></i>
+        </div>
+
+        <div>
+
+            <h2>{{ patients }}</h2>
+            <p>Total Patients</p>
+
+        </div>
+
+    </div>
+
+    <div class="card appointment-card">
+
+        <div class="card-icon">
+            <i class="fa-solid fa-calendar-check"></i>
+        </div>
+
+        <div>
+
+            <h2>{{ appointments }}</h2>
+            <p>Appointments</p>
+
+        </div>
+
+    </div>
+
+    <div class="card revenue-card">
+
+        <div class="card-icon">
+            <i class="fa-solid fa-chart-line"></i>
+        </div>
+
+        <div>
+
+            <h2>R0</h2>
+            <p>Revenue</p>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Chart Area -->
+<div class="dashboard-grid">
+
+    <!-- Left Side -->
+    <div class="left-panel">
+
+        <div class="chart-card">
+
+            <h3>Appointment Overview</h3>
+
+            <canvas id="appointmentChart"></canvas>
+
+        </div>
+
+    </div>
+
+    <!-- Right Side -->
+    <div class="right-panel">
+
+        <div class="widget">
+
+            <h3>Today's Schedule</h3>
+
+            <ul class="schedule-list">
+
+                <li>
+
+                    <strong>09:00</strong>
+
+                    <span>John Smith</span>
+
+                </li>
+
+                <li>
+
+                    <strong>10:30</strong>
+
+                    <span>Sarah Johnson</span>
+
+                </li>
+
+                <li>
+
+                    <strong>13:00</strong>
+
+                    <span>Michael Brown</span>
+
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</div>
+
+<div class="widget activity">
+
+    <div class="widget-header">
+
+        <h3>Recent Activity</h3>
+
+        <a href="#">View All</a>
+
+    </div>
+
+    <div class="activity-item">
+
+        <i class="fa-solid fa-user-plus"></i>
+
+        <div>
+
+            <strong>New patient registered</strong>
+
+            <small>2 minutes ago</small>
+
+        </div>
+
+    </div>
+
+    <div class="activity-item">
+
+        <i class="fa-solid fa-calendar-check"></i>
+
+        <div>
+
+            <strong>Appointment approved</strong>
+
+            <small>10 minutes ago</small>
+
+        </div>
+
+    </div>
+
+    <!-- Recent Activity-->
+
+    <div class="activity-item">
+
+        <i class="fa-solid fa-user-doctor"></i>
+
+        <div>
+
+            <strong>Doctor profile updated</strong>
+
+            <small>1 hour ago</small>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+            
+           
+            
+            
+            <!-- Recent Appointments-->
+             <div class="recent">
+                <h3>Recent Appointments</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Patient</th>
+                            <th>Doctor</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        <tr>
+                            <td>John Smith</td>
+                            <td>Dr Adams</td>
+                            <td>05 July</td>
+                            <td><span class="status approved">Approved</span></td>
+                        </tr>
+                        <tr>
+                            <td>Sarah</td>
+                            <td>Dr James</td>
+                            <td>06 July</td>
+                            <td><span class="status pending">Pending</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+
+</body>
+</html>
