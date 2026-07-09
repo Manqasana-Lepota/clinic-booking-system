@@ -3,6 +3,7 @@ from app import mysql
 
 admin_bp = Blueprint('admin', __name__)
 
+# Admin route
 @admin_bp.route('/admin/dashboard')
 def dashboard():
 

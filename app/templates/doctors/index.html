@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Doctors</title>
+</head>
+<body>
+    {% extends "layouts/admin_base.html" %}
+
+{% block title %}Doctor Management{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+
+        <h1>Doctor Management</h1>
+
+        <p>Manage all doctors in the clinic.</p>
+
+    </div>
+    <a href="{{ url_for('doctor.add_doctor') }}" class="btn-primary">
+
+        <i class="fa-solid fa-plus"></i>
+
+        Add Doctor
+
+    </a>
+
+</div>
+
+<div class="table-card">
+
+    <div class="table-header">
+
+        <input
+            type="text"
+            placeholder="Search doctor..."
+            class="search-input">
+
+    </div>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Name</th>
+
+                <th>Email</th>
+
+                <th>Phone</th>
+
+                <th>Speciality</th>
+
+                <th>Status</th>
+
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% if doctors %}
+
+            {% for doctor in doctors %}
+
+            <tr>
+
+                <td>{{ doctor.name }}</td>
+
+                <td>{{ doctor.email }}</td>
+
+                <td>{{ doctor.phone }}</td>
+
+                <td>{{ doctor.speciality }}</td>
+
+                <td>
+
+                    <span class="badge">
+
+                        {{ doctor.status }}
+
+                    </span>
+
+                </td>
+
+                <td>
+
+                    <button class="action-btn view">
+                        <i class="fa-solid fa-eye"></i>
+                    </button>
+
+                   <a href="{{ url_for('doctor.edit_doctor', doctor_id=doctor.doctor_id) }}"
+   class="action-btn edit">
+
+    <i class="fa-solid fa-pen"></i>
+
+</a>
+
+                    <button class="action-btn delete">
+                        <i class="fa-solid fa-trash"></i>
+                    </button>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        {% else %}
+
+            <tr>
+
+                <td colspan="6">
+
+                    No doctors found.
+
+                </td>
+
+            </tr>
+
+        {% endif %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}
+    
+</body>
+</html>

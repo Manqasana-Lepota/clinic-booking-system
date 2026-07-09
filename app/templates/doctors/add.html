@@ -1,0 +1,162 @@
+{% extends "layouts/admin_base.html" %}
+
+{% block title %}Add Doctor{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h1>Add Doctor</h1>
+        <p>Create a new doctor account.</p>
+    </div>
+
+    <a href="{{ url_for('doctor.doctors') }}" class="btn btn-secondary">
+        <i class="fa-solid fa-arrow-left"></i>
+        Back
+    </a>
+
+</div>
+
+<div class="table-card">
+
+    <form method="POST">
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <label>Full Name</label>
+                <input type="text" class="form-control" name="name" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Email Address</label>
+                <input type="email" class="form-control" name="email" required>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <label>Phone Number</label>
+                <input type="text" class="form-control" name="phone" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Gender</label>
+
+                <select class="form-select" name="gender" required>
+
+                    <option value="">Select Gender</option>
+                    <option>Male</option>
+                    <option>Female</option>
+                    <option>Other</option>
+
+                </select>
+
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+
+    <label>Speciality</label>
+
+    <select class="form-select" name="speciality" required>
+
+        <option value="">Select Speciality</option>
+
+        <option value="General Practitioner">
+            General Practitioner
+        </option>
+
+        <option value="Cardiologist">
+            Cardiologist
+        </option>
+
+        <option value="Dentist">
+            Dentist
+        </option>
+
+        <option value="Dermatologist">
+            Dermatologist
+        </option>
+
+        <option value="Pediatrician">
+            Pediatrician
+        </option>
+
+        <option value="Orthopedic Surgeon">
+            Orthopedic Surgeon
+        </option>
+
+        <option value="Neurologist">
+            Neurologist
+        </option>
+
+        <option value="Psychiatrist">
+            Psychiatrist
+        </option>
+
+        <option value="Gynecologist">
+            Gynecologist
+        </option>
+
+        <option value="Ophthalmologist">
+            Ophthalmologist
+        </option>
+
+        <option value="ENT Specialist">
+            ENT Specialist
+        </option>
+
+        <option value="Urologist">
+            Urologist
+        </option>
+
+        <option value="Radiologist">
+            Radiologist
+        </option>
+
+        <option value="Physiotherapist">
+            Physiotherapist
+        </option>
+
+    </select>
+
+</div>
+
+            <div class="col-md-6 mb-3">
+                <label>Qualification</label>
+                <input type="text" class="form-control" name="qualification" required>
+            </div>
+
+        </div>
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <label>Years of Experience</label>
+                <input type="number" class="form-control" name="experience" min="0" required>
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Password</label>
+                <input type="password" class="form-control" name="password" required>
+            </div>
+
+        </div>
+
+        <button class="btn btn-primary">
+            <i class="fa-solid fa-save"></i>
+            Save Doctor
+        </button>
+
+    </form>
+
+</div>
+
+{% endblock %}

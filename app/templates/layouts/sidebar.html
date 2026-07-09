@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Side Bar</title>
+</head>
+<body>
+
+     <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="logo">
+                <i class="fa-solid fa-hospital"></i>
+
+                <div>
+                    <h2>Clinic</h2>
+                    <span>Booking System</span>
+                </div>
+            </div>
+            
+            <ul class="menu">
+                <li class="active">
+                    <a href="{{ url_for('admin.dashboard') }}">
+                        <i class="fa-solid fa-gauge-high"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="{{ url_for('doctor.doctors') }}">
+                        <i class="fa-solid fa-user-doctor"></i>
+                        <span>Doctors</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-users"></i>
+                        <span>Patients</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-calendar-check"></i>
+                        <span>Appointments</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-chart-column"></i>
+                        <span>Reports</span>
+                    </a>
+                </li>
+                
+                <li>
+                    <a href="#">
+                        <i class="fa-solid fa-gear"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>
+                
+                <li class="logout">
+                    <a href="{{ url_for('auth.logout') }}">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+        
+    
+</body>
+</html>

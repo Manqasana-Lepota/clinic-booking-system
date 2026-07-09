@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Top Bar</title>
+</head>
+<body>
+    <!-- Top Navbar -->
+            <div class="topbar">
+                <div class="left-section">
+                    <button class="menu-toggle" id="menu-toggle">
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                    
+                    <div>
+                        <h2>Dashboard</h2>
+                        <small>Welcome back, {{ session['user_name'] }}</small>
+                    </div>
+                </div>
+                
+                <div class="right-section">
+                    <div class="search-box">
+                        <i class="fa-solid fa-search"></i>
+                        <input type="text" placeholder="Search...">
+                    </div>
+                    
+                    <button class="icon-btn">
+                        <i class="fa-solid fa-moon"></i>
+                    </button>
+                    
+                    <button class="icon-btn notification">
+                        <i class="fa-solid fa-bell"></i>
+                        <span>3</span>
+                    </button>
+                    
+                    <div class="profile" id="profileMenu">
+                        <img src="{{ url_for('static', filename='images/admin.png') }}">
+                        
+                        <div>
+                            <strong>{{ session['user_name'] }}</strong>
+                            <small>Administrator</small>
+                        </div>
+                        
+                        <i class="fa-solid fa-chevron-down"></i>
+
+                        <div class="profile-dropdown">
+                            <a href="#">
+                                <i class="fa-solid fa-user"></i>
+                                My Profile
+                            </a>
+                            
+                            <a href="#">
+                                <i class="fa-solid fa-gear"></i>
+                                Settings
+                            </a>
+                            
+                            <a href="{{ url_for('auth.logout') }}">
+                                <i class="fa-solid fa-right-from-bracket"></i>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+</body>
+</html>
