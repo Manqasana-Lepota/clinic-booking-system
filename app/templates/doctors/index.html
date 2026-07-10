@@ -35,10 +35,20 @@
 
     <div class="table-header">
 
-        <input
-            type="text"
-            placeholder="Search doctor..."
-            class="search-input">
+     <form method="GET">
+
+<input
+    type="text"
+    name="search"
+    placeholder="Search doctor..."
+    value="{{ search }}"
+    class="search-input">
+
+<button type="submit">
+    Search
+</button>
+
+</form>
 
     </div>
 
@@ -64,7 +74,7 @@
 
         </thead>
 
-        <tbody>
+        <tbody id="doctorTableBody">
 
         {% if doctors %}
 
@@ -79,22 +89,22 @@
                 <td>{{ doctor.phone }}</td>
 
                 <td>{{ doctor.speciality }}</td>
+                <td>
+    {% if doctor.status == "Active" %}
+        <span class="badge bg-success">Active</span>
+    {% else %}
+        <span class="badge bg-danger">Inactive</span>
+    {% endif %}
+</td>
 
                 <td>
 
-                    <span class="badge">
+                   <a href="{{ url_for('doctor.view_doctor', doctor_id=doctor.doctor_id) }}"
+   class="action-btn view">
 
-                        {{ doctor.status }}
+    <i class="fa-solid fa-eye"></i>
 
-                    </span>
-
-                </td>
-
-                <td>
-
-                    <button class="action-btn view">
-                        <i class="fa-solid fa-eye"></i>
-                    </button>
+</a>
 
                    <a href="{{ url_for('doctor.edit_doctor', doctor_id=doctor.doctor_id) }}"
    class="action-btn edit">
@@ -103,13 +113,87 @@
 
 </a>
 
-                    <button class="action-btn delete">
-                        <i class="fa-solid fa-trash"></i>
-                    </button>
+     <a href="#"
+   class="action-btn delete"
+   data-bs-toggle="modal"
+   data-bs-target="#deleteModal{{ doctor.doctor_id }}">
+
+    <i class="fa-solid fa-trash"></i>
+
+</a>
 
                 </td>
 
             </tr>
+
+            <!-- Delete Modal -->
+<div class="modal fade"
+     id="deleteModal{{ doctor.doctor_id }}"
+     tabindex="-1">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header bg-danger text-white">
+
+                <h5 class="modal-title">
+
+                    <i class="fa-solid fa-triangle-exclamation"></i>
+
+                    Deactivate Doctor
+
+                </h5>
+
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <p>
+
+                    Are you sure you want to deactivate
+
+                    <strong>{{ doctor.name }}</strong>?
+
+                </p>
+
+                <p class="text-muted">
+
+                    This doctor will no longer be available
+                    for new appointments.
+
+                </p>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+
+                    Cancel
+
+                </button>
+
+                <a href="{{ url_for('doctor.deactivate_doctor', doctor_id=doctor.doctor_id) }}"
+                   class="btn btn-danger">
+
+                    Deactivate
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
 
             {% endfor %}
 
@@ -130,6 +214,42 @@
         </tbody>
 
     </table>
+
+</div>
+
+<div class="pagination">
+
+
+{% if page > 1 %}
+
+<a href="{{ url_for('doctor.doctors', page=page-1, search=search) }}"
+   class="btn btn-secondary">
+
+Previous
+
+</a>
+
+{% endif %}
+
+
+
+<span>
+Page {{ page }} of {{ total_pages }}
+</span>
+
+
+
+{% if page < total_pages %}
+
+<a href="{{ url_for('doctor.doctors', page=page+1, search=search) }}"
+   class="btn btn-primary">
+
+Next
+
+</a>
+
+{% endif %}
+
 
 </div>
 

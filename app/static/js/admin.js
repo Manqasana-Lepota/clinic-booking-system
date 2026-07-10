@@ -1,3 +1,10 @@
+console.log("admin.js loaded");
+
+
+// ==========================
+// Dashboard Chart
+// ==========================
+
 const ctx = document.getElementById('appointmentChart');
 
 if (ctx) {
@@ -33,24 +40,37 @@ if (ctx) {
 
         options: {
 
-            responsive:true,
-
-            plugins:{
-                legend:{
-                    display:true
-                }
-            }
+            responsive:true
 
         }
 
     });
 
+}
+
+
+
+// ==========================
+// Profile Menu
+// ==========================
+
 const profile = document.getElementById("profileMenu");
 
-profile.addEventListener("click", () => {
 
-    profile.classList.toggle("active");
+if(profile){
 
-});
+    profile.addEventListener("click", () => {
+
+        profile.classList.toggle("active");
+
+    });
 
 }
+
+
+
+// ==========================
+// Doctor Live Search
+// ==========================
+
+
