@@ -75,7 +75,7 @@ def login():
                 return redirect(url_for('admin.dashboard'))
 
             elif user['role'] == 'doctor':
-                return "Doctor Dashboard"
+                return redirect(url_for('doctor_dashboard.dashboard'))
 
             else:
                 return "Patient Dashboard"

@@ -1,0 +1,103 @@
+{% extends "layouts/doctor_base.html" %}
+
+
+{% block title %}
+Edit Profile
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="page-header">
+
+<h1>Edit Profile</h1>
+
+<p>Update your professional information.</p>
+
+</div>
+
+
+
+<div class="table-card">
+
+
+<form method="POST">
+
+
+<div class="mb-3">
+
+<label>
+Phone
+</label>
+
+<input
+type="text"
+name="phone"
+class="form-control"
+value="{{ doctor.phone }}"
+required>
+
+</div>
+
+
+
+<div class="mb-3">
+
+<label>
+Qualification
+</label>
+
+<input
+type="text"
+name="qualification"
+class="form-control"
+value="{{ doctor.qualification }}"
+required>
+
+</div>
+
+
+
+<div class="mb-3">
+
+<label>
+Experience (Years)
+</label>
+
+<input
+type="number"
+name="experience"
+class="form-control"
+value="{{ doctor.experience }}"
+required>
+
+</div>
+
+
+
+<button class="btn btn-success">
+
+Save Changes
+
+</button>
+
+
+
+<a href="{{ url_for('doctor_profile.profile') }}"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+
+
+</form>
+
+
+</div>
+
+
+{% endblock %}

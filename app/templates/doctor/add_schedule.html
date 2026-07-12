@@ -1,0 +1,76 @@
+{% extends "layouts/doctor_base.html" %}
+
+
+{% block title %}
+Add Schedule
+{% endblock %}
+
+
+{% block content %}
+
+
+<h1>Add Schedule</h1>
+
+
+<form method="POST">
+
+
+<label>
+Day
+</label>
+
+<select name="day" class="form-control">
+
+<option>Monday</option>
+<option>Tuesday</option>
+<option>Wednesday</option>
+<option>Thursday</option>
+<option>Friday</option>
+<option>Saturday</option>
+<option>Sunday</option>
+
+</select>
+
+
+<br>
+
+
+<label>
+Start Time
+</label>
+
+<input 
+type="time"
+name="start_time"
+class="form-control"
+required>
+
+
+<br>
+
+
+<label>
+End Time
+</label>
+
+<input
+type="time"
+name="end_time"
+class="form-control"
+required>
+
+
+<br>
+
+
+<button class="btn btn-success">
+
+Save Schedule
+
+</button>
+
+
+</form>
+
+
+{% endblock %}

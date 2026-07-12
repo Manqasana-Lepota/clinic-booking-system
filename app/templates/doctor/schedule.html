@@ -1,0 +1,173 @@
+{% extends "layouts/doctor_base.html" %}
+
+
+{% block title %}
+My Schedule
+{% endblock %}
+
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h1>My Schedule</h1>
+        <p>Manage your weekly availability.</p>
+    </div>
+
+    <a href="{{ url_for('doctor_schedule.add_schedule') }}"
+       class="btn-primary">
+
+        <i class="fa-solid fa-plus"></i>
+        Add Schedule
+
+    </a>
+
+</div>
+
+<div class="table-card">
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Day</th>
+                <th>Start Time</th>
+                <th>End Time</th>
+                <th>Status</th>
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% for schedule in schedules %}
+
+        <tr>
+
+            <td>{{ schedule.day }}</td>
+
+            <td>{{ schedule.start_time }}</td>
+
+            <td>{{ schedule.end_time }}</td>
+
+            <td>
+
+                {% if schedule.status == "Available" %}
+
+                    <span class="badge bg-success">
+                        Available
+                    </span>
+
+                {% else %}
+
+                    <span class="badge bg-danger">
+                        Not Available
+                    </span>
+
+                {% endif %}
+
+            </td>
+
+            <td>
+                <a href="{{ url_for('doctor_schedule.edit_schedule',
+schedule_id=schedule.schedule_id) }}"
+   class="action-btn edit">
+
+    <i class="fa-solid fa-pen"></i>
+
+</a>
+
+               <a href="#"
+   class="action-btn delete"
+   data-bs-toggle="modal"
+   data-bs-target="#deleteModal{{ schedule.schedule_id }}">
+
+    <i class="fa-solid fa-trash"></i>
+
+</a>
+
+            </td>
+
+        </tr>
+
+        <div class="modal fade"
+     id="deleteModal{{ schedule.schedule_id }}"
+     tabindex="-1">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header bg-danger text-white">
+
+                <h5 class="modal-title">
+                    Delete Schedule
+                </h5>
+
+                <button
+                    type="button"
+                    class="btn-close btn-close-white"
+                    data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <p>
+                    Are you sure you want to delete this schedule?
+                </p>
+
+                <strong>
+                    {{ schedule.day }}
+
+                    {{ schedule.start_time }}
+
+                    -
+
+                    {{ schedule.end_time }}
+                </strong>
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button
+                    class="btn btn-secondary"
+                    data-bs-dismiss="modal">
+
+                    Cancel
+
+                </button>
+
+                <a href="{{ url_for('doctor_schedule.delete_schedule',
+schedule_id=schedule.schedule_id) }}"
+                   class="btn btn-danger">
+
+                    Delete
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+        {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+
+{% endblock %}

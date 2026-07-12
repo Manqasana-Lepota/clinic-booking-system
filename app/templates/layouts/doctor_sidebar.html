@@ -1,0 +1,101 @@
+<aside class="sidebar">
+
+
+<div class="logo">
+
+    <i class="fa-solid fa-hospital"></i>
+
+    <div>
+
+        <h2>ClinicMS</h2>
+
+        <small>Clinic Booking System</small>
+
+           
+
+    </div>
+    
+
+</div>
+ <span>Doctor Portal</span>
+
+
+
+
+
+
+
+<ul class="menu">
+
+
+<li>
+
+<a href="{{ url_for('doctor_dashboard.dashboard') }}"
+class="{% if request.endpoint and request.endpoint.startswith('doctor_dashboard.') %}active{% endif %}">
+
+
+<i class="fa-solid fa-gauge"></i>
+
+Dashboard
+
+
+</a>
+
+</li>
+
+
+
+<li>
+
+<a href="{{ url_for('doctor_schedule.schedule') }}"
+class="{% if request.endpoint and request.endpoint.startswith('doctor_schedule.') %}active{% endif %}">
+
+
+<i class="fa-solid fa-calendar-days"></i>
+
+My Schedule
+
+
+</a>
+
+</li>
+
+
+
+<li>
+
+<a href="{{ url_for('doctor_profile.profile') }}"
+class="{% if request.endpoint and request.endpoint.startswith('doctor_profile.') %}active{% endif %}">
+
+<i class="fa-solid fa-user"></i>
+
+My Profile
+
+</a>
+
+</li>
+
+
+
+<li class="logout">
+
+
+<a href="{{ url_for('auth.logout') }}">
+
+
+<i class="fa-solid fa-right-from-bracket"></i>
+
+Logout
+
+
+</a>
+
+
+</li>
+
+
+
+</ul>
+
+
+</aside>

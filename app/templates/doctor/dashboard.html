@@ -1,0 +1,160 @@
+{% extends "layouts/doctor_base.html" %}
+
+{% block title %}Doctor Dashboard{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1>Doctor Dashboard</h1>
+        <p>
+    Welcome back, Dr. {{ doctor.name }}
+</p>
+    </div>
+</div>
+
+<!-- Statistics -->
+<div class="cards">
+
+    <div class="card doctor-card">
+        <div class="card-icon">
+            <i class="fa-solid fa-calendar-check"></i>
+        </div>
+
+        <div>
+            <h2>{{ today_appointments }}</h2>
+            <p>Today's Appointments</p>
+        </div>
+    </div>
+
+    <div class="card patient-card">
+        <div class="card-icon">
+            <i class="fa-solid fa-users"></i>
+        </div>
+
+        <div>
+            <h2>{{ total_patients }}</h2>
+            <p>Total Patients</p>
+        </div>
+    </div>
+
+    <div class="card appointment-card">
+        <div class="card-icon">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+        <div>
+            <h2>{{ completed_today }}</h2>
+            <p>Completed Today</p>
+        </div>
+    </div>
+
+    <div class="card revenue-card">
+        <div class="card-icon">
+            <i class="fa-solid fa-user-doctor"></i>
+        </div>
+
+        <div>
+            <h2>Available</h2>
+            <p>Status</p>
+        </div>
+    </div>
+
+</div>
+
+<!-- Dashboard Grid -->
+<div class="dashboard-grid">
+
+    <!-- Schedule -->
+    <div class="left-panel">
+
+        <div class="widget">
+
+            <h3>Today's Schedule</h3>
+
+            <ul class="schedule-list">
+
+                <li>
+                    <strong>09:00</strong>
+                    <span>Sarah Johnson</span>
+                </li>
+
+                <li>
+                    <strong>10:30</strong>
+                    <span>Michael Brown</span>
+                </li>
+
+                <li>
+                    <strong>13:00</strong>
+                    <span>David Smith</span>
+                </li>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+    <!-- Doctor Profile -->
+    <div class="right-panel">
+
+        <div class="widget">
+
+    <h3>My Profile</h3>
+
+    <p>
+        <strong>Name:</strong>
+        {{ doctor.name }}
+    </p>
+
+    <p>
+        <strong>Email:</strong>
+        {{ doctor.email }}
+    </p>
+
+    <p>
+        <strong>Phone:</strong>
+        {{ doctor.phone }}
+    </p>
+
+    <p>
+        <strong>Speciality:</strong>
+        {{ doctor.speciality }}
+    </p>
+
+    <p>
+        <strong>Qualification:</strong>
+        {{ doctor.qualification }}
+    </p>
+
+    <p>
+        <strong>Experience:</strong>
+        {{ doctor.experience }} Years
+    </p>
+
+    <p>
+        <strong>Status:</strong>
+
+        {% if doctor.status == "Active" %}
+
+        <span class="badge bg-success">
+            Active
+        </span>
+
+        {% else %}
+
+        <span class="badge bg-danger">
+            Inactive
+        </span>
+
+        {% endif %}
+
+    </p>
+
+</div>
+
+    </div>
+
+</div>
+
+{% endblock %}

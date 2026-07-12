@@ -1,0 +1,117 @@
+{% extends "layouts/doctor_base.html" %}
+
+
+{% block title %}
+My Profile
+{% endblock %}
+
+
+
+{% block content %}
+
+
+<div class="page-header">
+    <div>
+
+        <h1>My Profile</h1>
+
+        <p>View your personal information.</p>
+
+    </div>
+      <a href="{{ url_for('doctor_profile.edit_profile') }}"
+   class="btn-primary">
+
+    <i class="fa-solid fa-pen"></i>
+
+    Edit Profile
+
+</a>
+
+</div>
+
+
+
+
+
+
+
+<div class="table-card">
+
+
+<table class="table">
+
+
+<tr>
+<th>Name</th>
+<td>{{ doctor.name }}</td>
+</tr>
+
+
+<tr>
+<th>Email</th>
+<td>{{ doctor.email }}</td>
+</tr>
+
+
+<tr>
+<th>Phone</th>
+<td>{{ doctor.phone }}</td>
+</tr>
+
+
+<tr>
+<th>Gender</th>
+<td>{{ doctor.gender }}</td>
+</tr>
+
+
+<tr>
+<th>Speciality</th>
+<td>{{ doctor.speciality }}</td>
+</tr>
+
+
+<tr>
+<th>Qualification</th>
+<td>{{ doctor.qualification }}</td>
+</tr>
+
+
+<tr>
+<th>Experience</th>
+<td>{{ doctor.experience }} years</td>
+</tr>
+
+
+<tr>
+
+<th>Status</th>
+
+<td>
+
+{% if doctor.status == "Active" %}
+
+<span class="badge bg-success">
+Active
+</span>
+
+{% else %}
+
+<span class="badge bg-danger">
+Inactive
+</span>
+
+{% endif %}
+
+</td>
+
+</tr>
+
+
+</table>
+
+
+</div>
+
+
+{% endblock %}
