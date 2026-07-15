@@ -1,0 +1,143 @@
+{% extends "layouts/admin_base.html" %}
+
+{% block title %}
+Edit Patient
+{% endblock %}
+
+
+{% block content %}
+
+
+<div class="page-header">
+
+<h1>Edit Patient</h1>
+
+</div>
+
+
+<div class="table-card">
+
+
+<form method="POST">
+
+
+<input
+type="text"
+name="name"
+value="{{ patient.name }}"
+class="form-control"
+required>
+
+
+<br>
+
+
+<input
+type="email"
+name="email"
+value="{{ patient.email }}"
+class="form-control"
+required>
+
+
+<br>
+
+
+<input
+type="text"
+name="phone"
+value="{{ patient.phone }}"
+class="form-control"
+required>
+
+
+<br>
+
+
+<select name="gender" class="form-control">
+
+<option>{{ patient.gender }}</option>
+
+<option>Male</option>
+
+<option>Female</option>
+
+<option>Other</option>
+
+</select>
+
+
+<br>
+
+
+<input
+type="date"
+name="date_of_birth"
+value="{{ patient.date_of_birth }}"
+class="form-control"
+required>
+
+
+<br>
+
+
+<textarea
+name="address"
+class="form-control">
+
+{{ patient.address }}
+
+</textarea>
+
+
+<br>
+
+
+<select name="status" class="form-control">
+
+
+<option>{{ patient.status }}</option>
+
+<option>Active</option>
+
+<option>Inactive</option>
+
+
+</select>
+
+
+<br>
+
+ <a href="{{ url_for('patient.patients') }}"
+       class="btn btn-secondary">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back
+
+    </a>
+
+
+
+<button class="btn btn-success">
+
+Update Patient
+
+</button>
+
+
+<a href="{{ url_for('patient.patients') }}"
+class="btn btn-secondary">
+
+Cancel
+
+</a>
+
+
+</form>
+
+
+</div>
+
+
+{% endblock %}

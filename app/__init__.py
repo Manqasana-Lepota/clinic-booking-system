@@ -35,7 +35,7 @@ def create_app():
     from app.routes.doctor_profile_routes import doctor_profile_bp
     app.register_blueprint(doctor_profile_bp)
 
-    #from app.routes.patient_routes import patient_bp
-    #app.register_blueprint(patient_bp)
+    from app.routes.patient_routes import patient_bp
+    app.register_blueprint(patient_bp)
 
     return app

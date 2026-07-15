@@ -692,3 +692,24 @@ tbody tr:hover {
     border-radius:8px;
     text-decoration:none;
 }
+
+.form-actions{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-top:25px;
+}
+
+.btn-secondary{
+    background:#6c757d;
+    color:white;
+    padding:10px 20px;
+    border-radius:8px;
+    text-decoration:none;
+    transition:.3s;
+}
+
+.btn-secondary:hover{
+    background:#5a6268;
+    color:white;
+}s
