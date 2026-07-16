@@ -5,34 +5,39 @@ console.log("admin.js loaded");
 // Dashboard Chart
 // ==========================
 
-const ctx = document.getElementById('appointmentChart');
+const ctx = document.getElementById("appointmentChart");
 
-if (ctx) {
+if (ctx && window.chartData) {
 
     new Chart(ctx, {
 
-        type: 'line',
+        type: "bar",
 
         data: {
 
             labels: [
-                'Mon',
-                'Tue',
-                'Wed',
-                'Thu',
-                'Fri',
-                'Sat',
-                'Sun'
+
+                "Pending",
+                "Approved",
+                "Completed",
+                "Cancelled"
+
             ],
 
             datasets: [{
 
-                label: 'Appointments',
+                label: "Appointments",
 
-                data: [12,19,8,15,25,18,20],
+                data: [
 
-                borderWidth:3,
-                fill:false
+                    window.chartData.pending,
+                    window.chartData.approved,
+                    window.chartData.completed,
+                    window.chartData.cancelled
+
+                ],
+
+                borderWidth: 1
 
             }]
 
@@ -40,7 +45,27 @@ if (ctx) {
 
         options: {
 
-            responsive:true
+            responsive: true,
+
+            plugins: {
+
+                legend: {
+
+                    display: false
+
+                }
+
+            },
+
+            scales: {
+
+                y: {
+
+                    beginAtZero: true
+
+                }
+
+            }
 
         }
 

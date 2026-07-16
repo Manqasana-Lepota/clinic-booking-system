@@ -1,0 +1,205 @@
+{% extends "layouts/admin_base.html" %}
+
+{% block title %}Edit Appointment{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1>Edit Appointment</h1>
+        <p>Update appointment details.</p>
+    </div>
+</div>
+
+<div class="form-card">
+
+<form method="POST">
+
+<!-- Patient -->
+<div class="form-group">
+<label>Patient</label>
+
+<select name="patient_id" required>
+
+{% for patient in patients %}
+
+<option value="{{ patient.id }}"
+{% if patient.id == appointment.patient_id %}selected{% endif %}>
+{{ patient.name }}
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<!-- Doctor -->
+<div class="form-group">
+
+<label>Doctor</label>
+
+<select
+name="doctor_id"
+id="doctorSelect"
+required>
+
+{% for doctor in doctors %}
+
+<option value="{{ doctor.id }}"
+{% if doctor.id == appointment.doctor_id %}selected{% endif %}>
+{{ doctor.name }}
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<!-- Schedule -->
+<div class="form-group">
+
+<label>Schedule</label>
+
+<select
+name="schedule_id"
+id="scheduleSelect"
+required>
+
+{% for schedule in schedules %}
+
+<option
+value="{{ schedule.schedule_id }}"
+{% if schedule.schedule_id == appointment.schedule_id %}selected{% endif %}>
+
+{{ schedule.day }}
+({{ schedule.start_time }} - {{ schedule.end_time }})
+
+</option>
+
+{% endfor %}
+
+</select>
+
+</div>
+
+<!-- Appointment Date -->
+
+<div class="form-group">
+
+<label>Date</label>
+
+<input
+type="date"
+name="appointment_date"
+value="{{ appointment.appointment_date }}"
+required>
+
+</div>
+
+<!-- Reason -->
+
+<div class="form-group">
+
+<label>Reason</label>
+
+<textarea
+name="reason"
+rows="4">{{ appointment.reason }}</textarea>
+
+</div>
+
+<!-- Status -->
+
+<div class="form-group">
+
+<label>Status</label>
+
+<select name="status">
+
+<option value="Pending"
+{% if appointment.status=="Pending" %}selected{% endif %}>
+Pending
+</option>
+
+<option value="Approved"
+{% if appointment.status=="Approved" %}selected{% endif %}>
+Approved
+</option>
+
+<option value="Completed"
+{% if appointment.status=="Completed" %}selected{% endif %}>
+Completed
+</option>
+
+<option value="Cancelled"
+{% if appointment.status=="Cancelled" %}selected{% endif %}>
+Cancelled
+</option>
+
+</select>
+
+</div>
+
+<div class="form-actions">
+
+<a href="{{ url_for('appointment.appointments') }}"
+class="btn btn-secondary">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+Back
+
+</a>
+
+<button
+type="submit"
+class="btn btn-primary">
+
+<i class="fa-solid fa-floppy-disk"></i>
+
+Update Appointment
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+<script>
+
+const doctorSelect = document.getElementById("doctorSelect");
+const scheduleSelect = document.getElementById("scheduleSelect");
+
+doctorSelect.addEventListener("change", function(){
+
+    const doctorId = this.value;
+
+    fetch("/admin/get-schedules/" + doctorId)
+
+    .then(response => response.json())
+
+    .then(data => {
+
+        scheduleSelect.innerHTML = "";
+
+        data.forEach(schedule => {
+
+            scheduleSelect.innerHTML += `
+            <option value="${schedule.schedule_id}">
+                ${schedule.day} (${schedule.start_time} - ${schedule.end_time})
+            </option>
+            `;
+
+        });
+
+    });
+
+});
+
+</script>
+
+{% endblock %}

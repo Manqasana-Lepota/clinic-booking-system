@@ -40,15 +40,57 @@ Dashboard
                         <p>Appointments</p>
                     </div>
                 </div>
-                
-                <div class="card revenue-card">
+
+                <div class="card today-card">
                     <div class="card-icon">
-                        <i class="fa-solid fa-chart-line"></i>
+                        <i class="fa-solid fa-calendar-day"></i>
                     </div>
-                    
                     <div>
-                        <h2>R0</h2>
-                        <p>Revenue</p>
+                        <h2>{{ today }}</h2>
+                        <p>Today's Appointments</p>
+                    </div>
+                </div>
+
+            </div>
+            
+            <div class="cards">
+                <div class="card pending-card">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-clock"></i>
+                    </div>
+                    <div>
+                        <h2>{{ pending }}</h2>
+                        <p>Pending</p>
+                    </div>
+                </div>
+                
+                <div class="card approved-card">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-circle-check"></i>
+                    </div>
+                    <div>
+                        <h2>{{ approved }}</h2>
+                        <p>Approved</p>
+                    </div>
+                </div>
+                
+                <div class="card completed-card">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-check-double"></i>
+                    </div>
+                    <div>
+                        <h2>{{ completed }}</h2>
+                        <p>Completed</p>
+                    </div>
+                </div>
+                
+                <div class="card cancelled-card">
+                    <div class="card-icon">
+                        <i class="fa-solid fa-ban"></i>
+                    </div>
+                    <div>
+                        <h2>{{ cancelled }}</h2>
+                        <p>Cancelled</p>
                     </div>
                 </div>
             </div>
@@ -68,19 +110,37 @@ Dashboard
                     <div class="widget">
                         <h3>Today's Schedule</h3>
                         <ul class="schedule-list">
-                            <li>
-                                <strong>09:00</strong>
-                                <span>John Smith</span>
-                            </li>
-                            <li>
-                                <strong>10:30</strong>
-                                <span>Sarah Johnson</span>
-                            </li>
-                            <li>
-                                <strong>13:00</strong>
-                                <span>Michael Brown</span>
-                            </li>
-                        </ul>
+
+{% if today_schedule %}
+
+    {% for appointment in today_schedule %}
+
+    <li>
+
+        <strong>
+            {{ appointment.start_time }}
+        </strong>
+
+        <span>
+            {{ appointment.patient_name }}
+        </span>
+
+    </li>
+
+    {% endfor %}
+
+{% else %}
+
+    <li>
+
+        <span>No appointments scheduled today.</span>
+
+    </li>
+
+{% endif %}
+
+</ul>
+                       
                     </div>
                 </div>
             </div>
@@ -132,21 +192,81 @@ Dashboard
                     </thead>
 
                     <tbody>
-                        <tr>
-                            <td>John Smith</td>
-                            <td>Dr Adams</td>
-                            <td>05 July</td>
-                            <td><span class="status approved">Approved</span></td>
-                        </tr>
-                        <tr>
-                            <td>Sarah</td>
-                            <td>Dr James</td>
-                            <td>06 July</td>
-                            <td><span class="status pending">Pending</span></td>
-                        </tr>
-                    </tbody>
+
+{% if recent_appointments %}
+
+    {% for appointment in recent_appointments %}
+
+    <tr>
+
+        <td>{{ appointment.patient_name }}</td>
+
+        <td>{{ appointment.doctor_name }}</td>
+
+        <td>{{ appointment.appointment_date }}</td>
+
+        <td>
+
+            {% if appointment.status == "Pending" %}
+
+                <span class="status pending">
+                    Pending
+                </span>
+
+            {% elif appointment.status == "Approved" %}
+
+                <span class="status approved">
+                    Approved
+                </span>
+
+            {% elif appointment.status == "Completed" %}
+
+                <span class="status completed">
+                    Completed
+                </span>
+
+            {% else %}
+
+                <span class="status cancelled">
+                    Cancelled
+                </span>
+
+            {% endif %}
+
+        </td>
+
+    </tr>
+
+    {% endfor %}
+
+{% else %}
+
+<tr>
+
+    <td colspan="4" class="text-center">
+
+        No recent appointments.
+
+    </td>
+
+</tr>
+
+{% endif %}
+
+</tbody>
                 </table>
             </div>
         </main>
     </div>
+    
+<script>
+window.chartData = {
+    pending: Number("{{ pending }}"),
+    approved: Number("{{ approved }}"),
+    completed: Number("{{ completed }}"),
+    cancelled: Number("{{ cancelled }}")
+};
+</script>
+
+
 {% endblock %}

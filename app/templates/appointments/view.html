@@ -1,0 +1,74 @@
+{% extends "layouts/admin_base.html" %}
+
+{% block title %}View Appointment{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1>Appointment Details</h1>
+        <p>View appointment information.</p>
+    </div>
+</div>
+
+<div class="form-card">
+
+    <div class="profile-grid">
+
+        <div class="profile-item">
+            <strong>Patient</strong>: {{ appointment.patient_name }}
+        </div><br>
+
+        <div class="profile-item">
+            <strong>Email</strong>: {{ appointment.patient_email }}
+        </div><br>
+
+        <div class="profile-item">
+            <strong>Phone</strong>: {{ appointment.patient_phone }}
+        </div><br>
+
+        <div class="profile-item">
+            <strong>Doctor</strong>: {{ appointment.doctor_name }}
+        </div><br>
+
+        <div class="profile-item">
+            <strong>Speciality</strong>: {{ appointment.speciality }}
+        </div><br>
+
+        <div class="profile-item">
+            <strong>Schedule</strong>: 
+                {{ appointment.day }}<br>
+                {{ appointment.start_time }} - {{ appointment.end_time }}
+            
+        </div><br>
+
+        <div class="profile-item">
+            <strong>Appointment Date</strong>: {{ appointment.appointment_date }}
+        </div><br>
+
+        <div class="profile-item">
+            <strong>Status</strong>: {{ appointment.status }}
+        </div><br>
+
+        <div class="profile-item" style="grid-column:1 / -1;">
+            <strong>Reason</strong>: {{ appointment.reason }}
+        </div>
+
+    </div>
+
+    <div class="form-actions">
+
+        <a href="{{ url_for('appointment.appointments') }}"
+           class="btn btn-secondary">
+
+            <i class="fa-solid fa-arrow-left"></i>
+
+            Back
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}
