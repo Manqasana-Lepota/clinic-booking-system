@@ -70,15 +70,19 @@ def login():
             session['user_name'] = user['name']
 
             print("Login successful!")
-
+            
             if user['role'] == 'admin':
                 return redirect(url_for('admin.dashboard'))
-
+            
             elif user['role'] == 'doctor':
                 return redirect(url_for('doctor_dashboard.dashboard'))
-
-            else:
-                return "Patient Dashboard"
+            
+            elif user['role'] == 'patient':
+                return redirect(url_for('patient_dashboard.dashboard'))
+            
+        else:
+            flash("Invalid user role.", "danger")
+            return redirect(url_for('auth.login'))
 
         flash("Invalid email or password.", "danger")
 

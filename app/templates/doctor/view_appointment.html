@@ -1,0 +1,252 @@
+{% extends "layouts/doctor_base.html" %}
+
+{% block title %}
+Appointment Details
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+    <div>
+        <h1>Appointment Details</h1>
+    </div>
+</div>
+
+<p><strong>Patient:</strong> {{ appointment.patient_name }}</p>
+
+<p><strong>Doctor:</strong> {{ appointment.doctor_name }}</p>
+
+<p><strong>Date:</strong> {{ appointment.appointment_date }}</p>
+
+<p>
+    <strong>Schedule:</strong>
+    {{ appointment.day }}
+    ({{ appointment.start_time }} - {{ appointment.end_time }})
+</p>
+
+<p><strong>Reason:</strong> {{ appointment.reason }}</p>
+
+<p>
+    <strong>Status:</strong>
+
+    {% if appointment.status == "Pending" %}
+        <span class="badge bg-warning text-dark">
+            {{ appointment.status }}
+        </span>
+
+    {% elif appointment.status == "Approved" %}
+        <span class="badge bg-primary">
+            {{ appointment.status }}
+        </span>
+
+    {% elif appointment.status == "Completed" %}
+        <span class="badge bg-success">
+            {{ appointment.status }}
+        </span>
+
+    {% elif appointment.status == "Cancelled" %}
+        <span class="badge bg-danger">
+            {{ appointment.status }}
+        </span>
+
+    {% else %}
+        <span class="badge bg-secondary">
+            {{ appointment.status }}
+        </span>
+
+    {% endif %}
+</p>
+
+{% if consultation %}
+
+<hr class="my-4">
+
+<div class="card shadow-sm">
+
+    <div class="card-header bg-info text-white">
+
+        <h5 class="mb-0">
+            <i class="fa-solid fa-notes-medical"></i>
+            Consultation Record
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        <div class="mb-3">
+
+            <strong>Diagnosis</strong>
+
+            <div class="border rounded p-3 bg-light">
+                {{ consultation.diagnosis }}
+            </div>
+
+        </div>
+
+        <div class="mb-3">
+
+            <strong>Prescription</strong>
+
+            <div class="border rounded p-3 bg-light">
+                {{ consultation.prescription }}
+            </div>
+
+        </div>
+
+        <strong>Instructions</strong>
+
+<div class="border rounded p-3 bg-light mb-3">
+
+    {{ consultation.instructions }}
+
+</div>
+
+        <div class="mb-3">
+
+            <strong>Consultation Notes</strong>
+
+            <div class="border rounded p-3 bg-light">
+                {{ consultation.consultation_notes }}
+            </div>
+
+        </div>
+
+        <small class="text-muted">
+
+            Saved on:
+            {{ consultation.created_at }}
+
+        </small>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+<div class="mt-4">
+
+    {% if appointment.status == "Pending" %}
+
+        <a href="{{ url_for('doctor_dashboard.approve_appointment',
+        appointment_id=appointment.appointment_id) }}"
+        class="btn btn-success">
+
+            <i class="fa-solid fa-check"></i>
+            Approve
+
+        </a>
+
+       
+
+
+        <a href="#"
+   class="btn btn-danger"
+   data-bs-toggle="modal"
+   data-bs-target="#cancelAppointmentModal">
+
+    <i class="fa-solid fa-xmark"></i>
+    Cancel
+
+</a>
+
+    {% elif appointment.status == "Approved" %}
+
+       <a href="{{ url_for('doctor_consultation.consultation',
+appointment_id=appointment.appointment_id) }}"
+class="btn btn-primary">
+
+    <i class="fa-solid fa-notes-medical"></i>
+    Consultation
+
+</a>
+
+    {% endif %}
+
+    <a href="{{ url_for('doctor_consultation.patient_history',
+patient_id=appointment.patient_id) }}"
+class="btn btn-info">
+
+    <i class="fa-solid fa-clock-rotate-left"></i>
+
+    Medical History
+
+</a>
+
+    <a href="{{ url_for('doctor_dashboard.appointments') }}"
+    class="btn btn-secondary">
+
+        <i class="fa-solid fa-arrow-left"></i>
+        Back
+
+    </a>
+
+</div>
+
+<!-- Cancel Appointment Modal -->
+<div class="modal fade"
+     id="cancelAppointmentModal"
+     tabindex="-1"
+     aria-labelledby="cancelAppointmentModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header bg-danger text-white">
+
+                <h5 class="modal-title"
+                    id="cancelAppointmentModalLabel">
+
+                    Cancel Appointment
+
+                </h5>
+
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                <i class="fa-solid fa-triangle-exclamation text-danger me-2"></i>
+
+                Are you sure you want to cancel this appointment?
+
+                <br><br>
+
+                This action cannot be undone.
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button type="button"
+                        class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+
+                    No
+
+                </button>
+
+                <a href="{{ url_for('doctor_dashboard.cancel_appointment',
+                appointment_id=appointment.appointment_id) }}"
+                class="btn btn-danger">
+
+                    Yes, Cancel Appointment
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

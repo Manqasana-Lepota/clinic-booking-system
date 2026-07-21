@@ -1,0 +1,293 @@
+{% extends "layouts/patient_base.html" %}
+
+{% block title %}
+My Appointments
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h1>My Appointments</h1>
+        <p>View all your appointments.</p>
+    </div>
+
+    <a href="{{ url_for('patient_dashboard.book_appointment') }}"
+       class="btn-primary">
+
+        <i class="fa-solid fa-plus"></i>
+
+        Book Appointment
+
+    </a>
+
+</div>
+
+<div class="table-card">
+
+    <div class="table-header">
+
+        <form method="GET">
+
+            <input
+                type="text"
+                name="search"
+                class="search-input"
+                placeholder="Search..."
+                value="{{ search }}">
+
+            <button
+                type="submit"
+                class="btn-primary">
+
+                Search
+
+            </button>
+
+        </form>
+
+    </div>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Doctor</th>
+                <th>Schedule</th>
+                <th>Date</th>
+                <th>Reason</th>
+                <th>Status</th>
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% if appointments %}
+
+            {% for appointment in appointments %}
+
+            <tr>
+
+                <td>{{ appointment.doctor_name }}</td>
+
+                <td>
+
+                    {{ appointment.day }}
+
+                    <br>
+
+                    <small>
+
+                        {{ appointment.start_time }}
+
+                        -
+
+                        {{ appointment.end_time }}
+
+                    </small>
+
+                </td>
+
+                <td>
+
+                    {{ appointment.appointment_date }}
+
+                </td>
+
+                <td>
+
+                    {{ appointment.reason }}
+
+                </td>
+
+                <td>
+
+                    {% if appointment.status == "Pending" %}
+
+                        <span class="badge bg-warning">
+
+                            Pending
+
+                        </span>
+
+                    {% elif appointment.status == "Approved" %}
+
+                        <span class="badge bg-success">
+
+                            Approved
+
+                        </span>
+
+                    {% elif appointment.status == "Completed" %}
+
+                        <span class="badge bg-primary">
+
+                            Completed
+
+                        </span>
+
+                    {% else %}
+
+                        <span class="badge bg-danger">
+
+                            Cancelled
+
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+                <td>
+
+    <!-- View -->
+    <a href="{{ url_for('patient_dashboard.view_appointment',
+                        appointment_id=appointment.appointment_id) }}"
+       class="action-btn view"
+       title="View">
+
+        <i class="fa-solid fa-eye"></i>
+
+    </a>
+
+    {% if appointment.status == "Pending" %}
+
+    <!-- Cancel -->
+    <a href="#"
+       class="action-btn delete"
+       data-bs-toggle="modal"
+       data-bs-target="#cancelModal{{ appointment.appointment_id }}">
+
+        <i class="fa-solid fa-ban"></i>
+
+    </a>
+
+    {% endif %}
+
+</td>
+
+            </tr>
+
+            {% if appointment.status == "Pending" %}
+
+<div class="modal fade"
+     id="cancelModal{{ appointment.appointment_id }}"
+     tabindex="-1">
+
+    <div class="modal-dialog">
+
+        <div class="modal-content">
+
+            <div class="modal-header bg-danger text-white">
+
+                <h5 class="modal-title">
+
+                    Cancel Appointment
+
+                </h5>
+
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal">
+                </button>
+
+            </div>
+
+            <div class="modal-body">
+
+                Are you sure you want to cancel this appointment?
+
+            </div>
+
+            <div class="modal-footer">
+
+                <button class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+
+                    Close
+
+                </button>
+
+                <a href="{{ url_for('patient_dashboard.cancel_appointment',
+                                    appointment_id=appointment.appointment_id) }}"
+                   class="btn btn-danger">
+
+                    Cancel Appointment
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+            {% endfor %}
+
+        {% else %}
+
+            <tr>
+
+                <td colspan="6" class="text-center">
+
+                    No appointments found.
+
+                </td>
+
+            </tr>
+
+        {% endif %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<div class="pagination">
+
+    {% if page > 1 %}
+
+    <a href="{{ url_for('patient_dashboard.appointments',
+                        page=page-1,
+                        search=search) }}"
+       class="btn btn-secondary">
+
+        Previous
+
+    </a>
+
+    {% endif %}
+
+    <span>
+
+        Page {{ page }} of {{ total_pages }}
+
+    </span>
+
+    {% if page < total_pages %}
+
+    <a href="{{ url_for('patient_dashboard.appointments',
+                        page=page+1,
+                        search=search) }}"
+       class="btn btn-primary">
+
+        Next
+
+    </a>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

@@ -32,6 +32,9 @@ def create_app():
     from app.routes.doctor_schedule_routes import doctor_schedule_bp
     app.register_blueprint(doctor_schedule_bp)
 
+    from app.routes.doctor_consultation_routes import doctor_consultation_bp
+    app.register_blueprint(doctor_consultation_bp)
+
     from app.routes.doctor_profile_routes import doctor_profile_bp
     app.register_blueprint(doctor_profile_bp)
 
@@ -40,5 +43,11 @@ def create_app():
 
     from app.routes.appointment_routes import appointment_bp
     app.register_blueprint(appointment_bp)
+
+    from app.routes.patient_dashboard_routes import patient_dashboard_bp
+    app.register_blueprint(patient_dashboard_bp)
+
+   
+
 
     return app

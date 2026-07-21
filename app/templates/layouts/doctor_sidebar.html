@@ -1,101 +1,72 @@
 <aside class="sidebar">
 
+    <!-- Logo -->
+    <div class="logo">
 
-<div class="logo">
+        <i class="fa-solid fa-hospital"></i>
 
-    <i class="fa-solid fa-hospital"></i>
-
-    <div>
-
-        <h2>ClinicMS</h2>
-
-        <small>Clinic Booking System</small>
-
-           
+        <div>
+            <h2>ClinicMS</h2>
+            <small>Clinic Booking System</small>
+        </div>
 
     </div>
-    
 
-</div>
- <span>Doctor Portal</span>
+    <div class="portal-title">
+        <span>Doctor Portal</span>
+    </div>
 
+    <!-- Navigation -->
+    <nav>
 
+        <a href="{{ url_for('doctor_dashboard.dashboard') }}">
 
+            <i class="fa-solid fa-gauge"></i>
 
+            <span>Dashboard</span>
 
+        </a>
 
+        <a href="{{ url_for('doctor_dashboard.appointments') }}">
 
-<ul class="menu">
+            <i class="fa-solid fa-calendar-check"></i>
 
+            <span>My Appointments</span>
 
-<li>
+        </a>
 
-<a href="{{ url_for('doctor_dashboard.dashboard') }}"
-class="{% if request.endpoint and request.endpoint.startswith('doctor_dashboard.') %}active{% endif %}">
+        <a href="#">
 
+            <i class="fa-solid fa-clock"></i>
 
-<i class="fa-solid fa-gauge"></i>
+            <span>My Schedule</span>
 
-Dashboard
+        </a>
 
+        <a href="#">
 
-</a>
+            <i class="fa-solid fa-users"></i>
 
-</li>
+            <span>My Patients</span>
 
+        </a>
 
+        <a href="#">
 
-<li>
+            <i class="fa-solid fa-user"></i>
 
-<a href="{{ url_for('doctor_schedule.schedule') }}"
-class="{% if request.endpoint and request.endpoint.startswith('doctor_schedule.') %}active{% endif %}">
+            <span>My Profile</span>
 
+        </a>
 
-<i class="fa-solid fa-calendar-days"></i>
+        <a href="{{ url_for('auth.logout') }}">
 
-My Schedule
+            <i class="fa-solid fa-right-from-bracket"></i>
 
+            <span>Logout</span>
 
-</a>
+        </a>
 
-</li>
-
-
-
-<li>
-
-<a href="{{ url_for('doctor_profile.profile') }}"
-class="{% if request.endpoint and request.endpoint.startswith('doctor_profile.') %}active{% endif %}">
-
-<i class="fa-solid fa-user"></i>
-
-My Profile
-
-</a>
-
-</li>
-
-
-
-<li class="logout">
-
-
-<a href="{{ url_for('auth.logout') }}">
-
-
-<i class="fa-solid fa-right-from-bracket"></i>
-
-Logout
-
-
-</a>
-
-
-</li>
-
-
-
-</ul>
-
+    </nav>
 
 </aside>

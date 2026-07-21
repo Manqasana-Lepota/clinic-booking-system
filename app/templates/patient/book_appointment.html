@@ -1,0 +1,164 @@
+{% extends "layouts/patient_base.html" %}
+
+{% block title %}
+Book Appointment
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h1>Book Appointment</h1>
+        <p>Book a new appointment with a doctor.</p>
+    </div>
+
+</div>
+
+<div class="form-card">
+
+<form method="POST">
+
+<div class="form-group">
+
+<label>Doctor</label>
+
+<select
+    name="doctor_id"
+    id="doctorSelect"
+    required>
+
+    <option value="">Select Doctor</option>
+
+    {% for doctor in doctors %}
+
+    <option value="{{ doctor.id }}">
+
+        {{ doctor.name }}
+
+    </option>
+
+    {% endfor %}
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Available Schedule</label>
+
+<select
+    name="schedule_id"
+    id="scheduleSelect"
+    required>
+
+    <option value="">Select Schedule</option>
+
+</select>
+
+</div>
+
+<div class="form-group">
+
+<label>Appointment Date</label>
+
+<input
+    type="date"
+    name="appointment_date"
+    required>
+
+</div>
+
+<div class="form-group">
+
+<label>Reason</label>
+
+<textarea
+    name="reason"
+    rows="4"
+    required></textarea>
+
+</div>
+
+<div class="form-actions">
+
+    <a href="{{ url_for('patient_dashboard.appointments') }}"
+       class="btn btn-secondary">
+
+        Back
+
+    </a>
+
+    <button
+        type="submit"
+        class="btn btn-primary">
+
+        Book Appointment
+
+    </button>
+
+</div>
+
+</form>
+
+</div>
+
+{% endblock %}
+
+{% block scripts %}
+
+<script>
+
+const doctorSelect = document.getElementById("doctorSelect");
+const scheduleSelect = document.getElementById("scheduleSelect");
+
+console.log("Doctor Select:", doctorSelect);
+console.log("Schedule Select:", scheduleSelect);
+
+doctorSelect.addEventListener("change", function () {
+
+    const doctorId = this.value;
+
+    console.log("Doctor Selected:", doctorId);
+
+    scheduleSelect.innerHTML =
+        '<option>Loading...</option>';
+
+    fetch("/patient/get-schedules/" + doctorId)
+
+    .then(response => {
+        console.log("Response Status:", response.status);
+        return response.json();
+    })
+
+    .then(data => {
+
+        console.log("Schedules:", data);
+
+        scheduleSelect.innerHTML =
+            '<option value="">Select Schedule</option>';
+
+        data.forEach(schedule => {
+
+            scheduleSelect.innerHTML += `
+                <option value="${schedule.schedule_id}">
+                    ${schedule.day}
+                    (${schedule.start_time} - ${schedule.end_time})
+                </option>
+            `;
+
+        });
+
+    })
+
+    .catch(error => {
+
+        console.error("Fetch Error:", error);
+
+    });
+
+});
+
+</script>
+{% endblock %}

@@ -1,0 +1,154 @@
+{% extends "layouts/doctor_base.html" %}
+
+{% block title %}
+Consultation Record
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <div class="card shadow">
+
+        <div class="card-header bg-primary text-white">
+
+            <h3>
+                <i class="fa-solid fa-notes-medical"></i>
+                Consultation Record
+            </h3>
+
+        </div>
+
+        <div class="card-body">
+
+            <div class="row mb-3">
+
+                <div class="col-md-6">
+                    <strong>Patient</strong>
+                    <p>{{ appointment.patient_name }}</p>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Doctor</strong>
+                    <p>{{ appointment.doctor_name }}</p>
+                </div>
+
+            </div>
+
+            <div class="row mb-3">
+
+                <div class="col-md-6">
+                    <strong>Appointment Date</strong>
+                    <p>{{ appointment.appointment_date }}</p>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Status</strong>
+                    <p>{{ appointment.status }}</p>
+                </div>
+
+            </div>
+
+            <div class="mb-4">
+
+                <strong>Reason for Visit</strong>
+
+                <div class="border rounded p-3 bg-light">
+
+                    {{ appointment.reason }}
+
+                </div>
+
+            </div>
+
+            <form method="POST">
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Diagnosis
+                    </label>
+
+                    <textarea
+                        name="diagnosis"
+                        class="form-control"
+                        rows="4"
+                        required></textarea>
+
+                </div>
+
+                <div class="mb-3">
+
+                    <label class="form-label">
+                        Prescription
+                    </label>
+
+                    <textarea
+                        name="prescription"
+                        class="form-control"
+                        rows="4"
+                        required></textarea>
+
+                </div>
+
+                <div class="mb-3">
+
+    <label class="form-label">
+
+        Instructions
+
+    </label>
+
+    <textarea
+        name="instructions"
+        class="form-control"
+        rows="4"
+        placeholder="Example:
+• Take one tablet after breakfast.
+• Drink plenty of water.
+• Return after 7 days."></textarea>
+
+</div>
+
+                <div class="mb-4">
+
+                    <label class="form-label">
+                        Consultation Notes
+                    </label>
+
+                    <textarea
+                        name="consultation_notes"
+                        class="form-control"
+                        rows="5"></textarea>
+
+                </div>
+
+                <button
+                    type="submit"
+                    class="btn btn-success">
+
+                    <i class="fa-solid fa-floppy-disk"></i>
+
+                    Save Consultation
+
+                </button>
+
+                <a href="{{ url_for('doctor_dashboard.view_appointment',
+                appointment_id=appointment.appointment_id) }}"
+                class="btn btn-secondary">
+
+                    <i class="fa-solid fa-arrow-left"></i>
+
+                    Back
+
+                </a>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+{% endblock %}

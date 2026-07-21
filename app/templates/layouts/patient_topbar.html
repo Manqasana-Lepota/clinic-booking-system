@@ -1,0 +1,49 @@
+<div class="topbar">
+
+    <div class="page-title">
+        <h3>Patient Portal</h3>
+    </div>
+
+    <div class="profile" id="profileMenu">
+
+    <i class="fa-solid fa-user-circle"></i>
+
+    <span>{{ session.get('user_name', 'Patient') }}</span>
+
+    <i class="fa-solid fa-chevron-down"></i>
+
+    <div class="profile-dropdown">
+
+        <a href="{{ url_for('patient_dashboard.profile') }}">
+
+            <i class="fa-solid fa-user"></i>
+
+            My Profile
+
+        </a>
+
+        <a href="{{ url_for('patient_dashboard.change_password') }}">
+
+            <i class="fa-solid fa-key"></i>
+
+            Change Password
+
+        </a>
+
+        <hr>
+
+        <a href="{{ url_for('auth.logout') }}">
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </a>
+
+    </div>
+
+</div>
+
+   
+
+</div>

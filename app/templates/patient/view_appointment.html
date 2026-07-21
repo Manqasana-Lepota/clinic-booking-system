@@ -1,0 +1,126 @@
+{% extends "layouts/patient_base.html" %}
+
+{% block title %}
+Appointment Details
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h1>Appointment Details</h1>
+        <p>View your appointment information.</p>
+    </div>
+
+</div>
+
+<div class="form-card">
+
+    <div class="row mb-3">
+
+        <div class="col-md-6">
+
+            <label class="form-label"><strong>Patient</strong></label>
+
+            <p>{{ appointment.patient_name }}</p>
+
+        </div>
+
+        <div class="col-md-6">
+
+            <label class="form-label"><strong>Doctor</strong></label>
+
+            <p>{{ appointment.doctor_name }}</p>
+
+        </div>
+
+    </div>
+
+    <div class="row mb-3">
+
+        <div class="col-md-4">
+
+            <label class="form-label"><strong>Day</strong></label>
+
+            <p>{{ appointment.day }}</p>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <label class="form-label"><strong>Time</strong></label>
+
+            <p>
+                {{ appointment.start_time }} -
+                {{ appointment.end_time }}
+            </p>
+
+        </div>
+
+        <div class="col-md-4">
+
+            <label class="form-label"><strong>Date</strong></label>
+
+            <p>{{ appointment.appointment_date }}</p>
+
+        </div>
+
+    </div>
+
+    <div class="mb-3">
+
+        <label class="form-label"><strong>Reason</strong></label>
+
+        <p>{{ appointment.reason }}</p>
+
+    </div>
+
+    <div class="mb-4">
+
+        <label class="form-label"><strong>Status</strong></label>
+
+        <p>
+
+            {% if appointment.status == "Pending" %}
+
+                <span class="badge bg-warning">
+                    Pending
+                </span>
+
+            {% elif appointment.status == "Approved" %}
+
+                <span class="badge bg-success">
+                    Approved
+                </span>
+
+            {% elif appointment.status == "Completed" %}
+
+                <span class="badge bg-primary">
+                    Completed
+                </span>
+
+            {% else %}
+
+                <span class="badge bg-danger">
+                    Cancelled
+                </span>
+
+            {% endif %}
+
+        </p>
+
+    </div>
+
+    <a href="{{ url_for('patient_dashboard.appointments') }}"
+       class="btn btn-secondary">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back
+
+    </a>
+
+</div>
+
+{% endblock %}

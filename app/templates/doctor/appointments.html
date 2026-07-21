@@ -1,0 +1,209 @@
+{% extends "layouts/doctor_base.html" %}
+
+{% block title %}
+My Appointments
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h1>My Appointments</h1>
+        <p>Manage your appointments.</p>
+    </div>
+
+</div>
+
+<div class="table-card">
+
+    <div class="table-header">
+
+        <form method="GET">
+
+            <input
+                type="text"
+                name="search"
+                class="search-input"
+                placeholder="Search patient..."
+                value="{{ search }}">
+
+            <button
+                type="submit"
+                class="btn-primary">
+
+                Search
+
+            </button>
+
+        </form>
+
+    </div>
+
+    <table>
+
+        <thead>
+
+            <tr>
+
+                <th>Patient</th>
+
+                <th>Schedule</th>
+
+                <th>Date</th>
+
+                <th>Reason</th>
+
+                <th>Status</th>
+
+                <th>Actions</th>
+
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+        {% if appointments %}
+
+            {% for appointment in appointments %}
+
+            <tr>
+
+                <td>{{ appointment.patient_name }}</td>
+
+                <td>
+
+                    {{ appointment.day }}
+
+                    <br>
+
+                    <small>
+
+                        {{ appointment.start_time }}
+
+                        -
+
+                        {{ appointment.end_time }}
+
+                    </small>
+
+                </td>
+
+                <td>
+
+                    {{ appointment.appointment_date }}
+
+                </td>
+
+                <td>
+
+                    {{ appointment.reason }}
+
+                </td>
+
+               <td>
+
+    {% if appointment.status == "Pending" %}
+        <span class="badge bg-warning text-dark">
+            {{ appointment.status }}
+        </span>
+
+    {% elif appointment.status == "Approved" %}
+        <span class="badge bg-primary">
+            {{ appointment.status }}
+        </span>
+
+    {% elif appointment.status == "Completed" %}
+        <span class="badge bg-success">
+            {{ appointment.status }}
+        </span>
+
+    {% elif appointment.status == "Cancelled" %}
+        <span class="badge bg-danger">
+            {{ appointment.status }}
+        </span>
+
+    {% else %}
+        <span class="badge bg-secondary">
+            {{ appointment.status }}
+        </span>
+
+    {% endif %}
+
+</td>
+
+                <td>
+
+                    <a href="{{ url_for('doctor_dashboard.view_appointment',
+                 appointment_id=appointment.appointment_id) }}"
+                       class="action-btn view"
+                       title="View">
+
+                        <i class="fa-solid fa-eye"></i>
+
+                    </a>
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        {% else %}
+
+            <tr>
+
+                <td colspan="6" class="text-center">
+
+                    No appointments found.
+
+                </td>
+
+            </tr>
+
+        {% endif %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+<div class="pagination">
+
+    {% if page > 1 %}
+
+    <a href="{{ url_for('doctor_dashboard.appointments',
+                        page=page-1,
+                        search=search) }}"
+       class="btn btn-secondary">
+
+        Previous
+
+    </a>
+
+    {% endif %}
+
+    <span>
+
+        Page {{ page }} of {{ total_pages }}
+
+    </span>
+
+    {% if page < total_pages %}
+
+    <a href="{{ url_for('doctor_dashboard.appointments',
+                        page=page+1,
+                        search=search) }}"
+       class="btn btn-primary">
+
+        Next
+
+    </a>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

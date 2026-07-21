@@ -17,47 +17,55 @@
 <div class="cards">
 
     <div class="card doctor-card">
+
         <div class="card-icon">
             <i class="fa-solid fa-calendar-check"></i>
         </div>
 
         <div>
-            <h2>{{ today_appointments }}</h2>
-            <p>Today's Appointments</p>
+            <h2>{{ appointments }}</h2>
+            <p>Total Appointments</p>
         </div>
+
     </div>
 
     <div class="card patient-card">
+
         <div class="card-icon">
-            <i class="fa-solid fa-users"></i>
+            <i class="fa-solid fa-calendar-day"></i>
         </div>
 
         <div>
-            <h2>{{ total_patients }}</h2>
-            <p>Total Patients</p>
+            <h2>{{ today }}</h2>
+            <p>Today's Appointments</p>
         </div>
+
     </div>
 
     <div class="card appointment-card">
+
         <div class="card-icon">
-            <i class="fa-solid fa-circle-check"></i>
+            <i class="fa-solid fa-clock"></i>
         </div>
 
         <div>
-            <h2>{{ completed_today }}</h2>
-            <p>Completed Today</p>
+            <h2>{{ pending }}</h2>
+            <p>Pending</p>
         </div>
+
     </div>
 
     <div class="card revenue-card">
+
         <div class="card-icon">
-            <i class="fa-solid fa-user-doctor"></i>
+            <i class="fa-solid fa-check-double"></i>
         </div>
 
         <div>
-            <h2>Available</h2>
-            <p>Status</p>
+            <h2>{{ completed }}</h2>
+            <p>Completed</p>
         </div>
+
     </div>
 
 </div>
@@ -73,88 +81,176 @@
             <h3>Today's Schedule</h3>
 
             <ul class="schedule-list">
-
+                
+                {% if today_schedule %}
+                
+                {% for appointment in today_schedule %}
+                
                 <li>
-                    <strong>09:00</strong>
-                    <span>Sarah Johnson</span>
+                    <strong>
+                        {{ appointment.start_time }}
+                    </strong>
+                    <span>
+                        {{ appointment.patient_name }}
+                    </span>
                 </li>
-
+                
+                {% endfor %}
+                
+                {% else %}
+                
                 <li>
-                    <strong>10:30</strong>
-                    <span>Michael Brown</span>
+                    <span>No appointments today.</span>
                 </li>
-
-                <li>
-                    <strong>13:00</strong>
-                    <span>David Smith</span>
-                </li>
-
+                
+                {% endif %}
             </ul>
-
         </div>
-
     </div>
 
+   
     <!-- Doctor Profile -->
     <div class="right-panel">
-
         <div class="widget">
+            <h3>My Profile</h3>
+            <p>
+                <strong>Name:</strong>
+                {{ doctor.name }}
+            </p>
+            <p>
+                <strong>Email:</strong>
+                {{ doctor.email }}
+            </p>
+            <p>
+                <strong>Phone:</strong>
+                {{ doctor.phone }}
+            </p>
+            <p>
+                <strong>Speciality:</strong>
+                {{ doctor.speciality }}
+            </p>
+            <p>
+                <strong>Qualification:</strong>
+                {{ doctor.qualification }}
+            </p>
+            <p>
+                <strong>Experience:</strong>
+                {{ doctor.experience }} Years
+            </p>
+            <p>
+                <strong>Status:</strong>
+                
+                {% if doctor.status == "Active" %}
+                
+                <span class="badge bg-success">
+                    Active
+                </span>
+                
+                {% else %}
+                
+                <span class="badge bg-danger">
+                    Inactive
+                </span>
+                
+                {% endif %}
+            </p>
+        </div>
+    </div>
+</div>
 
-    <h3>My Profile</h3>
+ <div class="recent">
 
-    <p>
-        <strong>Name:</strong>
-        {{ doctor.name }}
-    </p>
+    <h3>Recent Appointments</h3>
 
-    <p>
-        <strong>Email:</strong>
-        {{ doctor.email }}
-    </p>
+    <table>
 
-    <p>
-        <strong>Phone:</strong>
-        {{ doctor.phone }}
-    </p>
+        <thead>
 
-    <p>
-        <strong>Speciality:</strong>
-        {{ doctor.speciality }}
-    </p>
+            <tr>
 
-    <p>
-        <strong>Qualification:</strong>
-        {{ doctor.qualification }}
-    </p>
+                <th>Patient</th>
 
-    <p>
-        <strong>Experience:</strong>
-        {{ doctor.experience }} Years
-    </p>
+                <th>Date</th>
 
-    <p>
-        <strong>Status:</strong>
+                <th>Status</th>
 
-        {% if doctor.status == "Active" %}
+            </tr>
 
-        <span class="badge bg-success">
-            Active
-        </span>
+        </thead>
+
+        <tbody>
+
+        {% if recent_appointments %}
+
+            {% for appointment in recent_appointments %}
+
+            <tr>
+
+                <td>{{ appointment.patient_name }}</td>
+
+                <td>{{ appointment.appointment_date }}</td>
+
+                <td>
+
+                    {% if appointment.status == "Pending" %}
+
+                        <span class="badge bg-warning">
+
+                            Pending
+
+                        </span>
+
+                    {% elif appointment.status == "Approved" %}
+
+                        <span class="badge bg-success">
+
+                            Approved
+
+                        </span>
+
+                    {% elif appointment.status == "Completed" %}
+
+                        <span class="badge bg-primary">
+
+                            Completed
+
+                        </span>
+
+                    {% else %}
+
+                        <span class="badge bg-danger">
+
+                            Cancelled
+
+                        </span>
+
+                    {% endif %}
+
+                </td>
+
+            </tr>
+
+            {% endfor %}
 
         {% else %}
 
-        <span class="badge bg-danger">
-            Inactive
-        </span>
+            <tr>
+
+                <td colspan="3" class="text-center">
+
+                    No appointments found.
+
+                </td>
+
+            </tr>
 
         {% endif %}
 
-    </p>
+        </tbody>
+
+    </table>
 
 </div>
 
-    </div>
-
-</div>
 
 {% endblock %}

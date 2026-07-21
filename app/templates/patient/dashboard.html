@@ -1,0 +1,92 @@
+{% extends "layouts/patient_base.html" %}
+
+{% block title %}
+Patient Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h1>Patient Dashboard</h1>
+        <p>Welcome to your patient portal.</p>
+    </div>
+
+</div>
+
+<!-- Dashboard Cards -->
+<div class="cards">
+
+    <div class="card appointment-card">
+
+        <div class="card-icon">
+            <i class="fa-solid fa-calendar-check"></i>
+        </div>
+
+        <div>
+            <h2>{{ total_appointments }}</h2>
+            <p>Total Appointments</p>
+        </div>
+
+    </div>
+
+    <div class="card today-card">
+
+        <div class="card-icon">
+            <i class="fa-solid fa-calendar-day"></i>
+        </div>
+
+        <div>
+            <h2>{{ upcoming }}</h2>
+            <p>Upcoming</p>
+        </div>
+
+    </div>
+
+    <div class="card completed-card">
+
+        <div class="card-icon">
+            <i class="fa-solid fa-check-double"></i>
+        </div>
+
+        <div>
+            <h2>{{ completed }}</h2>
+            <p>Completed</p>
+        </div>
+
+    </div>
+
+    <div class="card pending-card">
+
+        <div class="card-icon">
+            <i class="fa-solid fa-clock"></i>
+        </div>
+
+        <div>
+            <h2>{{ pending }}</h2>
+            <p>Pending</p>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="table-card mt-4">
+
+    <h3>Welcome!</h3>
+
+    <p>
+        From this portal you will be able to:
+    </p>
+
+    <ul>
+        <li>Book appointments</li>
+        <li>View your appointments</li>
+        <li>Track appointment status</li>
+        <li>Manage your profile</li>
+    </ul>
+
+</div>
+
+{% endblock %}

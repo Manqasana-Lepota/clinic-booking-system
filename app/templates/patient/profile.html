@@ -1,0 +1,68 @@
+{% extends "layouts/patient_base.html" %}
+
+{% block title %}
+My Profile
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header">
+
+    <div>
+        <h1>My Profile</h1>
+        <p>View your personal information.</p>
+    </div>
+
+</div>
+
+<div class="form-card">
+
+    <div class="mb-3">
+        <label><strong>Name:</strong></label>       {{ patient.name }}
+    </div>
+
+    <div class="mb-3">
+        <label><strong>Email:</strong></label>  {{ patient.email }}
+    </div>
+
+    <div class="mb-3">
+        <label><strong>Phone:</strong></label>  {{ patient.phone }}
+    </div>
+
+    <div class="mb-3">
+        <label><strong>Gender:</strong></label>  {{ patient.gender }}
+    </div>
+
+    <div class="mb-3">
+        <label><strong>Date of Birth:</strong></label>  {{ patient.date_of_birth }}
+    </div>
+
+    <div class="mb-3">
+        <label><strong>Address:</strong></label>  {{ patient.address }}
+    </div>
+
+    <div class="form-actions">
+
+        <a href="{{ url_for('patient_dashboard.edit_profile') }}"
+           class="btn btn-primary">
+
+            <i class="fa-solid fa-pen"></i>
+
+            Edit Profile
+
+        </a>
+
+        <a href="{{ url_for('patient_dashboard.change_password') }}"
+           class="btn btn-secondary">
+
+            <i class="fa-solid fa-key"></i>
+
+            Change Password
+
+        </a>
+
+    </div>
+
+</div>
+
+{% endblock %}

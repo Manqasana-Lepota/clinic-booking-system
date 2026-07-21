@@ -81,12 +81,19 @@ if (ctx && window.chartData) {
 
 const profile = document.getElementById("profileMenu");
 
+if (profile) {
 
-if(profile){
+    profile.addEventListener("click", function (e) {
 
-    profile.addEventListener("click", () => {
+        e.stopPropagation();
 
         profile.classList.toggle("active");
+
+    });
+
+    document.addEventListener("click", function () {
+
+        profile.classList.remove("active");
 
     });
 

@@ -1,0 +1,63 @@
+<div class="sidebar">
+
+   <div class="logo">
+
+    <i class="fa-solid fa-hospital"></i>
+
+    <div>
+
+        <h2>ClinicMS</h2>
+
+        <small>Clinic Booking System</small>
+
+           
+
+    </div>
+    
+
+</div>
+ <span>Patient Portal</span>
+
+    <ul class="menu">
+
+        <li>
+            <a href="{{ url_for('patient_dashboard.dashboard') }}"
+               class="{% if request.endpoint == 'patient_dashboard.dashboard' %}active{% endif %}">
+                <i class="fa-solid fa-gauge"></i>
+                Dashboard
+            </a>
+        </li>
+
+        <li>
+    <a href="{{ url_for('patient_dashboard.appointments') }}"
+       class="{% if request.endpoint == 'patient_dashboard.appointments' %}active{% endif %}">
+        <i class="fa-solid fa-calendar-check"></i>
+        My Appointments
+    </a>
+</li>
+
+        <li>
+            <a href="{{ url_for('patient_dashboard.book_appointment') }}"
+   class="{% if request.endpoint == 'patient_dashboard.book_appointment' %}active{% endif %}">
+                <i class="fa-solid fa-calendar-plus"></i>
+                Book Appointment
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('patient_dashboard.profile') }}">
+                <i class="fa-solid fa-user"></i>
+                My Profile
+            </a>
+        </li>
+
+        <li>
+            <a href="{{ url_for('auth.logout') }}">
+                <i class="fa-solid fa-right-from-bracket"></i>
+                Logout
+            </a>
+        </li>
+
+    </ul>
+
+</div>
