@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<title>Medical Report</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+rel="stylesheet">
+
+<style>
+
+body{
+    background:#f4f6f9;
+    padding:40px;
+}
+
+.report{
+
+    max-width:900px;
+
+    margin:auto;
+
+    background:white;
+
+    padding:40px;
+
+    border-radius:10px;
+
+    box-shadow:0 0 15px rgba(0,0,0,.1);
+
+}
+
+.section-title{
+
+    border-bottom:2px solid #0d6efd;
+
+    margin-top:30px;
+
+    margin-bottom:20px;
+
+    padding-bottom:5px;
+
+    color:#0d6efd;
+
+}
+
+.value{
+
+    border:1px solid #ddd;
+
+    border-radius:6px;
+
+    padding:12px;
+
+    background:#fafafa;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="report">
+
+<div class="text-center">
+
+<h2>Clinic Booking System</h2>
+
+<h4>Medical Report</h4>
+
+<hr>
+
+</div>
+
+<h5 class="section-title">
+Patient Information
+</h5>
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+
+<strong>Name</strong>
+
+<div class="value">
+
+{{ report.patient_name }}
+
+</div>
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<strong>Gender</strong>
+
+<div class="value">
+
+{{ report.gender }}
+
+</div>
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<strong>Date of Birth</strong>
+
+<div class="value">
+
+{{ report.date_of_birth }}
+
+</div>
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<strong>Phone</strong>
+
+<div class="value">
+
+{{ report.phone }}
+
+</div>
+
+</div>
+
+<div class="col-12 mb-3">
+
+<strong>Address</strong>
+
+<div class="value">
+
+{{ report.address }}
+
+</div>
+
+</div>
+
+</div>
+
+<h5 class="section-title">
+
+Doctor Information
+
+</h5>
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+
+<strong>Doctor</strong>
+
+<div class="value">
+
+Dr. {{ report.doctor_name }}
+
+</div>
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<strong>Speciality</strong>
+
+<div class="value">
+
+{{ report.speciality }}
+
+</div>
+
+</div>
+
+</div>
+
+<h5 class="section-title">
+
+Appointment
+
+</h5>
+
+<div class="row">
+
+<div class="col-md-6 mb-3">
+
+<strong>Date</strong>
+
+<div class="value">
+
+{{ report.appointment_date }}
+
+</div>
+
+</div>
+
+<div class="col-md-6 mb-3">
+
+<strong>Time</strong>
+
+<div class="value">
+
+{{ report.start_time }} - {{ report.end_time }}
+
+</div>
+
+</div>
+
+</div>
+
+<h5 class="section-title">
+
+Diagnosis
+
+</h5>
+
+<div class="value">
+
+{{ report.diagnosis }}
+
+</div>
+
+<h5 class="section-title">
+
+Prescription
+
+</h5>
+
+<div class="value">
+
+{{ report.prescription }}
+
+</div>
+
+<h5 class="section-title">
+
+Instructions
+
+</h5>
+
+<div class="value">
+
+{{ report.instructions }}
+
+</div>
+
+<h5 class="section-title">
+
+Consultation Notes
+
+</h5>
+
+<div class="value">
+
+{{ report.consultation_notes }}
+
+</div>
+
+<div class="row mt-5">
+
+<div class="col-md-6">
+
+__________________________
+
+<br>
+
+Doctor Signature
+
+</div>
+
+<div class="col-md-6 text-end">
+
+Generated on
+
+<br>
+
+{{ report.appointment_date }}
+
+</div>
+
+</div>
+
+<hr>
+
+<div class="text-center mt-4">
+
+<button
+class="btn btn-primary"
+onclick="window.print()">
+
+<i class="fa-solid fa-print"></i>
+
+Print Report
+
+</button>
+
+<a
+href="{{ url_for('doctor_appointment.appointments') }}"
+class="btn btn-secondary">
+
+Back
+
+</a>
+
+</div>
+
+</div>
+
+</body>
+
+</html>

@@ -786,3 +786,22 @@ tbody tr:hover {
     display:block;
 
 }
+
+
+.card{
+    border:none;
+    border-radius:12px;
+}
+
+.card-header{
+    font-weight:600;
+}
+
+.table td,
+.table th{
+    vertical-align:middle;
+}
+
+.border{
+    background:#f8fafc;
+}

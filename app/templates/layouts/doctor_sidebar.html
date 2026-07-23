@@ -12,6 +12,7 @@
 
     </div>
 
+    <!-- Portal -->
     <div class="portal-title">
         <span>Doctor Portal</span>
     </div>
@@ -19,52 +20,46 @@
     <!-- Navigation -->
     <nav>
 
+        <!-- Dashboard -->
         <a href="{{ url_for('doctor_dashboard.dashboard') }}">
-
             <i class="fa-solid fa-gauge"></i>
-
             <span>Dashboard</span>
-
         </a>
 
-        <a href="{{ url_for('doctor_dashboard.appointments') }}">
-
+        <!-- Appointments -->
+        <a href="{{ url_for('doctor_appointment.appointments') }}">
             <i class="fa-solid fa-calendar-check"></i>
-
-            <span>My Appointments</span>
-
+            <span>Appointments</span>
         </a>
 
+        <!-- Schedule -->
         <a href="#">
-
             <i class="fa-solid fa-clock"></i>
-
-            <span>My Schedule</span>
-
+            <span>Schedule</span>
         </a>
 
+        <!-- Patients -->
         <a href="#">
-
             <i class="fa-solid fa-users"></i>
-
-            <span>My Patients</span>
-
+            <span>Patients</span>
         </a>
 
+        <!-- Reports -->
         <a href="#">
-
-            <i class="fa-solid fa-user"></i>
-
-            <span>My Profile</span>
-
+            <i class="fa-solid fa-file-medical"></i>
+            <span>Medical Reports</span>
         </a>
 
+        <!-- Profile -->
+        <a href="#">
+            <i class="fa-solid fa-user-doctor"></i>
+            <span>My Profile</span>
+        </a>
+
+        <!-- Logout -->
         <a href="{{ url_for('auth.logout') }}">
-
             <i class="fa-solid fa-right-from-bracket"></i>
-
             <span>Logout</span>
-
         </a>
 
     </nav>

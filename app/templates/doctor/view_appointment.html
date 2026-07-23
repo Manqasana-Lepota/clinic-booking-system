@@ -6,246 +6,400 @@ Appointment Details
 
 {% block content %}
 
-<div class="page-header">
-    <div>
-        <h1>Appointment Details</h1>
-    </div>
+<!-- ========================= -->
+
+<!-- Page Header -->
+
+<!-- ========================= -->
+
+<div class="page-header mb-4">
+    <h1>
+        <i class="fa-solid fa-calendar-check"></i>
+        Appointment Details
+    </h1>
 </div>
 
-<p><strong>Patient:</strong> {{ appointment.patient_name }}</p>
+<!-- ========================= -->
 
-<p><strong>Doctor:</strong> {{ appointment.doctor_name }}</p>
+<!-- Appointment Information -->
 
-<p><strong>Date:</strong> {{ appointment.appointment_date }}</p>
+<!-- ========================= -->
 
-<p>
-    <strong>Schedule:</strong>
-    {{ appointment.day }}
-    ({{ appointment.start_time }} - {{ appointment.end_time }})
-</p>
+<div class="card shadow-sm mb-4">
 
-<p><strong>Reason:</strong> {{ appointment.reason }}</p>
+```
+<div class="card-header bg-primary text-white">
 
-<p>
-    <strong>Status:</strong>
+    <h5 class="mb-0">
+        <i class="fa-solid fa-circle-info"></i>
+        Appointment Information
+    </h5>
 
-    {% if appointment.status == "Pending" %}
-        <span class="badge bg-warning text-dark">
-            {{ appointment.status }}
-        </span>
+</div>
 
-    {% elif appointment.status == "Approved" %}
-        <span class="badge bg-primary">
-            {{ appointment.status }}
-        </span>
+<div class="card-body">
 
-    {% elif appointment.status == "Completed" %}
-        <span class="badge bg-success">
-            {{ appointment.status }}
-        </span>
+    <div class="row">
 
-    {% elif appointment.status == "Cancelled" %}
-        <span class="badge bg-danger">
-            {{ appointment.status }}
-        </span>
+        <div class="col-md-6 mb-3">
+            <strong>Patient</strong><br>
+            {{ appointment.patient_name }}
+        </div>
 
-    {% else %}
-        <span class="badge bg-secondary">
-            {{ appointment.status }}
-        </span>
+        <div class="col-md-6 mb-3">
+            <strong>Doctor</strong><br>
+            {{ appointment.doctor_name }}
+        </div>
 
-    {% endif %}
-</p>
+        <div class="col-md-6 mb-3">
+            <strong>Date</strong><br>
+            {{ appointment.appointment_date }}
+        </div>
+
+        <div class="col-md-6 mb-3">
+            <strong>Schedule</strong><br>
+            {{ appointment.day }}
+            ({{ appointment.start_time }} - {{ appointment.end_time }})
+        </div>
+
+        <div class="col-12 mb-3">
+            <strong>Reason</strong><br>
+            {{ appointment.reason }}
+        </div>
+
+        <div class="col-12">
+
+            <strong>Status</strong><br>
+
+            {% if appointment.status == "Pending" %}
+                <span class="badge bg-warning text-dark">Pending</span>
+
+            {% elif appointment.status == "Approved" %}
+                <span class="badge bg-primary">Approved</span>
+
+            {% elif appointment.status == "Completed" %}
+                <span class="badge bg-success">Completed</span>
+
+            {% elif appointment.status == "Cancelled" %}
+                <span class="badge bg-danger">Cancelled</span>
+
+            {% else %}
+                <span class="badge bg-secondary">
+                    {{ appointment.status }}
+                </span>
+
+            {% endif %}
+
+        </div>
+
+    </div>
+
+</div>
+```
+
+</div>
+
+<!-- ========================= -->
+
+<!-- Consultation Record -->
+
+<!-- ========================= -->
 
 {% if consultation %}
 
-<hr class="my-4">
+<div class="card shadow-sm mb-4">
 
-<div class="card shadow-sm">
+```
+<div class="card-header bg-info text-white">
 
-    <div class="card-header bg-info text-white">
-
-        <h5 class="mb-0">
-            <i class="fa-solid fa-notes-medical"></i>
-            Consultation Record
-        </h5>
-
-    </div>
-
-    <div class="card-body">
-
-        <div class="mb-3">
-
-            <strong>Diagnosis</strong>
-
-            <div class="border rounded p-3 bg-light">
-                {{ consultation.diagnosis }}
-            </div>
-
-        </div>
-
-        <div class="mb-3">
-
-            <strong>Prescription</strong>
-
-            <div class="border rounded p-3 bg-light">
-                {{ consultation.prescription }}
-            </div>
-
-        </div>
-
-        <strong>Instructions</strong>
-
-<div class="border rounded p-3 bg-light mb-3">
-
-    {{ consultation.instructions }}
+    <h5 class="mb-0">
+        <i class="fa-solid fa-notes-medical"></i>
+        Consultation Record
+    </h5>
 
 </div>
 
-        <div class="mb-3">
+<div class="card-body">
 
-            <strong>Consultation Notes</strong>
+    <div class="mb-3">
 
-            <div class="border rounded p-3 bg-light">
-                {{ consultation.consultation_notes }}
-            </div>
+        <strong>Diagnosis</strong>
 
+        <div class="border rounded p-3 bg-light">
+            {{ consultation.diagnosis }}
         </div>
 
-        <small class="text-muted">
+    </div>
 
-            Saved on:
-            {{ consultation.created_at }}
+    <div class="mb-3">
 
-        </small>
+        <strong>Prescription</strong>
+
+        <div class="border rounded p-3 bg-light">
+            {{ consultation.prescription }}
+        </div>
 
     </div>
+
+    <div class="mb-3">
+
+        <strong>Instructions</strong>
+
+        <div class="border rounded p-3 bg-light">
+            {{ consultation.instructions }}
+        </div>
+
+    </div>
+
+    <div class="mb-3">
+
+        <strong>Consultation Notes</strong>
+
+        <div class="border rounded p-3 bg-light">
+            {{ consultation.consultation_notes }}
+        </div>
+
+    </div>
+
+    <small class="text-muted">
+        Saved on: {{ consultation.created_at }}
+    </small>
+
+</div>
+```
 
 </div>
 
 {% endif %}
 
-<div class="mt-4">
+<!-- ========================= -->
 
-    {% if appointment.status == "Pending" %}
+<!-- Action Buttons -->
 
-        <a href="{{ url_for('doctor_dashboard.approve_appointment',
-        appointment_id=appointment.appointment_id) }}"
-        class="btn btn-success">
+<!-- ========================= -->
 
-            <i class="fa-solid fa-check"></i>
-            Approve
+<!-- ========================= -->
+<!-- Actions -->
+<!-- ========================= -->
 
-        </a>
+<div class="d-flex justify-content-between align-items-center mt-4">
 
-       
+    <div class="dropdown">
 
+        <button
+            class="btn btn-primary dropdown-toggle"
+            type="button"
+            data-bs-toggle="dropdown">
 
-        <a href="#"
-   class="btn btn-danger"
-   data-bs-toggle="modal"
-   data-bs-target="#cancelAppointmentModal">
+            <i class="fa-solid fa-bars"></i>
 
-    <i class="fa-solid fa-xmark"></i>
-    Cancel
+            Actions
 
-</a>
+        </button>
 
-    {% elif appointment.status == "Approved" %}
+        <ul class="dropdown-menu">
 
-       <a href="{{ url_for('doctor_consultation.consultation',
+            <li>
+
+                <a class="dropdown-item"
+                   href="{{ url_for('doctor_patient.patient_profile',
+                   patient_id=appointment.patient_id) }}">
+
+                    <i class="fa-solid fa-user me-2"></i>
+
+                    Patient Profile
+
+                </a>
+
+            </li>
+
+           
+
+{% if appointment.status == "Completed" %}
+
+<a href="{{ url_for('doctor_report.medical_report',
 appointment_id=appointment.appointment_id) }}"
-class="btn btn-primary">
+class="btn btn-success">
 
-    <i class="fa-solid fa-notes-medical"></i>
-    Consultation
+    <i class="fa-solid fa-file-medical"></i>
 
-</a>
-
-    {% endif %}
-
-    <a href="{{ url_for('doctor_consultation.patient_history',
-patient_id=appointment.patient_id) }}"
-class="btn btn-info">
-
-    <i class="fa-solid fa-clock-rotate-left"></i>
-
-    Medical History
+    Medical Report
 
 </a>
 
-    <a href="{{ url_for('doctor_dashboard.appointments') }}"
-    class="btn btn-secondary">
+{% endif %}
+
+            {% if appointment.status == "Pending" %}
+
+            <li><hr class="dropdown-divider"></li>
+
+            <li>
+
+                <a class="dropdown-item text-success"
+                   href="{{ url_for('doctor_dashboard.approve_appointment',
+                   appointment_id=appointment.appointment_id) }}">
+
+                    <i class="fa-solid fa-check me-2"></i>
+
+                    Approve Appointment
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a class="dropdown-item text-danger"
+                   href="#"
+                   data-bs-toggle="modal"
+                   data-bs-target="#cancelAppointmentModal">
+
+                    <i class="fa-solid fa-xmark me-2"></i>
+
+                    Cancel Appointment
+
+                </a>
+
+            </li>
+
+            {% endif %}
+
+            {% if appointment.status == "Approved" %}
+
+            <li><hr class="dropdown-divider"></li>
+
+            <li>
+
+                <a class="dropdown-item"
+                   href="{{ url_for('doctor_consultation.consultation',
+                   appointment_id=appointment.appointment_id) }}">
+
+                    <i class="fa-solid fa-notes-medical me-2"></i>
+
+                    Consultation
+
+                </a>
+
+            </li>
+
+            {% endif %}
+
+            <li><hr class="dropdown-divider"></li>
+
+            <li>
+
+                <a class="dropdown-item disabled">
+
+                    <i class="fa-solid fa-print me-2"></i>
+
+                    Print Medical Report
+
+                    <small class="text-muted">(Coming Soon)</small>
+
+                </a>
+
+            </li>
+
+            <li>
+
+                <a class="dropdown-item disabled">
+
+                    <i class="fa-solid fa-file-pdf me-2"></i>
+
+                    Download Prescription
+
+                    <small class="text-muted">(Coming Soon)</small>
+
+                </a>
+
+            </li>
+
+        </ul>
+
+    </div>
+
+    <a href="{{ url_for('doctor_appointment.appointments') }}"
+       class="btn btn-secondary">
 
         <i class="fa-solid fa-arrow-left"></i>
+
         Back
 
     </a>
 
 </div>
 
+<!-- ========================= -->
+
 <!-- Cancel Appointment Modal -->
+
+<!-- ========================= -->
+
 <div class="modal fade"
      id="cancelAppointmentModal"
      tabindex="-1"
      aria-labelledby="cancelAppointmentModalLabel"
      aria-hidden="true">
 
-    <div class="modal-dialog">
+```
+<div class="modal-dialog">
 
-        <div class="modal-content">
+    <div class="modal-content">
 
-            <div class="modal-header bg-danger text-white">
+        <div class="modal-header bg-danger text-white">
 
-                <h5 class="modal-title"
-                    id="cancelAppointmentModalLabel">
+            <h5 class="modal-title"
+                id="cancelAppointmentModalLabel">
 
-                    Cancel Appointment
+                Cancel Appointment
 
-                </h5>
+            </h5>
 
-                <button type="button"
-                        class="btn-close btn-close-white"
-                        data-bs-dismiss="modal">
-                </button>
+            <button
+                type="button"
+                class="btn-close btn-close-white"
+                data-bs-dismiss="modal">
+            </button>
 
-            </div>
+        </div>
 
-            <div class="modal-body">
+        <div class="modal-body">
 
-                <i class="fa-solid fa-triangle-exclamation text-danger me-2"></i>
+            <i class="fa-solid fa-triangle-exclamation text-danger me-2"></i>
 
-                Are you sure you want to cancel this appointment?
+            Are you sure you want to cancel this appointment?
 
-                <br><br>
+            <br><br>
 
-                This action cannot be undone.
+            This action cannot be undone.
 
-            </div>
+        </div>
 
-            <div class="modal-footer">
+        <div class="modal-footer">
 
-                <button type="button"
-                        class="btn btn-secondary"
-                        data-bs-dismiss="modal">
+            <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal">
 
-                    No
+                No
 
-                </button>
+            </button>
 
-                <a href="{{ url_for('doctor_dashboard.cancel_appointment',
-                appointment_id=appointment.appointment_id) }}"
-                class="btn btn-danger">
+            <a href="{{ url_for('doctor_appointment.cancel_appointment',
+            appointment_id=appointment.appointment_id) }}"
+            class="btn btn-danger">
 
-                    Yes, Cancel Appointment
+                Yes, Cancel Appointment
 
-                </a>
-
-            </div>
+            </a>
 
         </div>
 
     </div>
+
+</div>
+```
 
 </div>
 

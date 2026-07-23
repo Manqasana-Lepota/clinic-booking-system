@@ -1,0 +1,238 @@
+{% extends "layouts/doctor_base.html" %}
+
+{% block title %}
+Patient Profile
+{% endblock %}
+
+{% block content %}
+
+<div class="page-header mb-4">
+    <h1>
+        <i class="fa-solid fa-user"></i>
+        Patient Profile
+    </h1>
+</div>
+
+<!-- Patient Information -->
+<div class="card shadow-sm mb-4">
+
+    <div class="card-header bg-primary text-white">
+        <h5 class="mb-0">
+            <i class="fa-solid fa-user-circle"></i>
+            Personal Information
+        </h5>
+    </div>
+
+    <div class="card-body">
+
+        <div class="row">
+
+            <div class="col-md-6 mb-3">
+                <strong>Name</strong><br>
+                {{ patient.name }}
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <strong>Email</strong><br>
+                {{ patient.email }}
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <strong>Phone</strong><br>
+                {{ patient.phone }}
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <strong>Gender</strong><br>
+                {{ patient.gender }}
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <strong>Date of Birth</strong><br>
+                {{ patient.date_of_birth }}
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <strong>Status</strong><br>
+
+                {% if patient.status == "Active" %}
+                    <span class="badge bg-success">Active</span>
+                {% else %}
+                    <span class="badge bg-danger">Inactive</span>
+                {% endif %}
+
+            </div>
+
+            <div class="col-12">
+                <strong>Address</strong><br>
+                {{ patient.address }}
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- Appointment History -->
+<div class="card shadow-sm mb-4">
+
+    <div class="card-header bg-info text-white">
+
+        <h5 class="mb-0">
+            <i class="fa-solid fa-calendar-check"></i>
+            Appointment History
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        {% if appointments %}
+
+        <table class="table table-hover">
+
+            <thead>
+
+                <tr>
+
+                    <th>Date</th>
+                    <th>Doctor</th>
+                    <th>Reason</th>
+                    <th>Status</th>
+
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+            {% for appointment in appointments %}
+
+                <tr>
+
+                    <td>{{ appointment.appointment_date }}</td>
+
+                    <td>{{ appointment.doctor_name }}</td>
+
+                    <td>{{ appointment.reason }}</td>
+
+                    <td>
+
+                        {% if appointment.status == "Pending" %}
+                            <span class="badge bg-warning text-dark">Pending</span>
+
+                        {% elif appointment.status == "Approved" %}
+                            <span class="badge bg-primary">Approved</span>
+
+                        {% elif appointment.status == "Completed" %}
+                            <span class="badge bg-success">Completed</span>
+
+                        {% else %}
+                            <span class="badge bg-danger">Cancelled</span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+            {% endfor %}
+
+            </tbody>
+
+        </table>
+
+        {% else %}
+
+            <p class="text-muted">
+                No appointment history available.
+            </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<!-- Consultation History -->
+<div class="card shadow-sm">
+
+    <div class="card-header bg-success text-white">
+
+        <h5 class="mb-0">
+
+            <i class="fa-solid fa-notes-medical"></i>
+
+            Consultation History
+
+        </h5>
+
+    </div>
+
+    <div class="card-body">
+
+        {% if consultations %}
+
+            {% for consultation in consultations %}
+
+            <div class="border rounded p-3 mb-4">
+
+                <h6 class="text-primary">
+
+                    {{ consultation.appointment_date }}
+
+                </h6>
+
+                <p>
+                    <strong>Diagnosis</strong><br>
+                    {{ consultation.diagnosis }}
+                </p>
+
+                <p>
+                    <strong>Prescription</strong><br>
+                    {{ consultation.prescription }}
+                </p>
+
+                <p>
+                    <strong>Instructions</strong><br>
+                    {{ consultation.instructions }}
+                </p>
+
+                <p>
+                    <strong>Consultation Notes</strong><br>
+                    {{ consultation.consultation_notes }}
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        {% else %}
+
+            <p class="text-muted">
+
+                No consultation history available.
+
+            </p>
+
+        {% endif %}
+
+    </div>
+
+</div>
+
+<div class="mt-4">
+
+    <a href="{{ url_for('doctor_appointment.appointments') }}"
+       class="btn btn-secondary">
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back
+
+    </a>
+
+</div>
+
+{% endblock %}

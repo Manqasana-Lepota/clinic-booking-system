@@ -13,15 +13,17 @@ doctor_consultation_bp = Blueprint(
 )
 def consultation(appointment_id):
 
+    # Check login
     if "user_id" not in session:
         return redirect(url_for("auth.login"))
 
+    # Check role
     if session.get("role") != "doctor":
         return redirect(url_for("auth.login"))
 
     cursor = mysql.connection.cursor()
 
-    # Get logged-in doctor
+    # Get logged-in doctor's ID
     cursor.execute("""
         SELECT id
         FROM doctors
@@ -30,12 +32,46 @@ def consultation(appointment_id):
 
     doctor = cursor.fetchone()
 
+    if not doctor:
+        cursor.close()
+        flash("Doctor not found.", "danger")
+        return redirect(url_for("auth.login"))
+
+    doctor_id = doctor["id"]
+
+    # -----------------------------
+    # Save Consultation
+    # -----------------------------
     if request.method == "POST":
 
         diagnosis = request.form["diagnosis"]
         prescription = request.form["prescription"]
-        consultation_notes = request.form["consultation_notes"]
         instructions = request.form["instructions"]
+        consultation_notes = request.form["consultation_notes"]
+
+        # Check if consultation already exists
+        cursor.execute("""
+            SELECT id
+            FROM consultation_records
+            WHERE appointment_id=%s
+        """, (appointment_id,))
+
+        existing = cursor.fetchone()
+
+        if existing:
+            cursor.close()
+
+            flash(
+                "Consultation has already been recorded.",
+                "warning"
+            )
+
+            return redirect(
+                url_for(
+                    "doctor_appointment.view_appointment",
+                    appointment_id=appointment_id
+                )
+            )
 
         # Save consultation
         cursor.execute("""
@@ -67,16 +103,21 @@ def consultation(appointment_id):
 
         cursor.close()
 
-        flash("Consultation saved successfully.", "success")
+        flash(
+            "Consultation saved successfully.",
+            "success"
+        )
 
         return redirect(
             url_for(
-                "doctor_dashboard.view_appointment",
+                "doctor_appointment.view_appointment",
                 appointment_id=appointment_id
             )
         )
 
-    # Load appointment
+    # -----------------------------
+    # Load Appointment
+    # -----------------------------
     cursor.execute("""
         SELECT
             a.id AS appointment_id,
@@ -102,9 +143,10 @@ def consultation(appointment_id):
 
         WHERE a.id=%s
         AND a.doctor_id=%s
+        AND a.status='Approved'
     """, (
         appointment_id,
-        doctor["id"]
+        doctor_id
     ))
 
     appointment = cursor.fetchone()
@@ -112,54 +154,16 @@ def consultation(appointment_id):
     cursor.close()
 
     if not appointment:
-        flash("Appointment not found.", "danger")
-        return redirect(url_for("doctor_dashboard.appointments"))
+        flash(
+            "Appointment not found or is not approved.",
+            "danger"
+        )
+
+        return redirect(
+            url_for("doctor_appointment.appointments")
+        )
 
     return render_template(
         "doctor/consultation.html",
         appointment=appointment
-    )
-
-
-@doctor_consultation_bp.route("/doctor/patient/<int:patient_id>/history")
-def patient_history(patient_id):
-
-    if "user_id" not in session:
-        return redirect(url_for("auth.login"))
-
-    if session.get("role") != "doctor":
-        return redirect(url_for("auth.login"))
-
-    cursor = mysql.connection.cursor()
-
-    cursor.execute("""
-        SELECT
-
-            a.appointment_date,
-
-            c.diagnosis,
-
-            c.prescription,
-
-            c.consultation_notes,
-
-            c.created_at
-
-        FROM consultation_records c
-
-        JOIN appointments a
-            ON c.appointment_id = a.id
-
-        WHERE a.patient_id=%s
-
-        ORDER BY a.appointment_date DESC
-    """, (patient_id,))
-
-    history = cursor.fetchall()
-
-    cursor.close()
-
-    return render_template(
-        "doctor/patient_history.html",
-        history=history
     )
